@@ -4,13 +4,24 @@ $(function () {
 
    socket.on('food_response', function (data) {
       console.log("got response");
-      $("#foodinfo").innerHTML = data.toString();
+      if(typeof data == "string")
+         $("#foodinfo").text(data);
+      else
+         $("#foodinfo").text(data.type);
    });
 
    $("#food_request").click(function () {
       console.log("button pushed");
-      var keyword = $("#foodname").value;
-      socket.emit('food_request', { value: keyword });
+      console.log($("#foodname").val());
+      var searchParam = {
+         collection: "foods",
+         values: {
+            name: $("#foodname").val()
+         }
+      };
+      console.log(searchParam);
+      console.log(searchParam.values);
+      socket.emit('query', searchParam);
       console.log("sent request");
    });
 });

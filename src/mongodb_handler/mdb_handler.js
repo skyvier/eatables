@@ -2,6 +2,8 @@ var MongoClient = require('mongodb').MongoClient;
 var Server = require('mongodb').Server;
 var Validator = require('jsonschema').Validator;
 
+var assert = require('assert');
+
 var configSchema = {
    "id": "/Config",
    "type": "object",
@@ -13,18 +15,27 @@ var configSchema = {
    "required": ["server_url", "db_name"]
 };
 
+var searchParamSchema = {
+   "id": "/SearchParam",
+   "type": "object",
+   "properties": {
+      "collection": { "type": "string" },
+      "values" : { "type": "object" }
+   }
+};
+
 var mongo_url;
-var param;
+var srv_param;
 var v = new Validator();
 
-function checkValidity(srv_param) {
+function checkValidity(param, schema) {
    var i;
-   var report = v.validate(srv_param, configSchema); 
+   var report = v.validate(param, schema); 
 
    if(report.errors.length == 0) 
      return true;
 
-   console.log("config file is not valid: ");
+   console.log(schema.id + " file is not valid: ");
    for(i = 0; i < report.errors.length; i++) {
       console.log(report.errors[i].message);
    }
@@ -33,14 +44,21 @@ function checkValidity(srv_param) {
 
 function openConfig() {
    var fs = require('fs');
+
+   try {
    var data = fs.readFileSync('config.json', 'utf8');
+   } catch(err) {
+      console.log(err);
+      return false;
+   }
+
    if(data === null || data === undefined) {
       console.log("the configuration file doens't exist");
       return false;
    }
 
-   param = JSON.parse(data);
-   if(!checkValidity(param))
+   srv_param = JSON.parse(data);
+   if(!checkValidity(srv_param, configSchema))
       return false;
 
    return true;
@@ -54,7 +72,7 @@ function testServer() {
 
    MongoClient.connect(mongo_url, function (err, db) {
       if(err) {
-         console.log("there was an error with mongoclient error test: " + err);
+         errorMessage("mongoclient test", err);
          return;
       }
 
@@ -64,19 +82,24 @@ function testServer() {
    return true;
 }
 
+function errorMessage(entity, error) {
+   console.log("there was an error with " + entity + ": " + error);
+}
+
 exports.checkConfig = openConfig;
 
 exports.init = function () {
    if(!openConfig()) {
-      param = null;
-      console.log("param is corrupted");
+      srv_param = null;
+      console.log("srv_param is corrupted");
       return false;
    }
 
-   if(param.server_port === undefined)
-      param.server_port = 27017; 
+   if(srv_param.server_port === undefined)
+      srv_param.server_port = 27017; 
 
-   mongo_url = 'mongodb://' + param.server_url + ':' + param.server_port;
+   mongo_url = 'mongodb://' + srv_param.server_url + 
+               ':' + srv_param.server_port + "/" + srv_param.db_name;
 
    if(!testServer())
       return false;
@@ -85,6 +108,41 @@ exports.init = function () {
    return true;
 }
 
+exports.query = function (search_param, callback) {
+   if(!checkValidity(search_param, searchParamSchema))
+      callback("validity error");
 
+   MongoClient.connect(mongo_url, function (err, db) {
+      if(err) {
+         errorMessage("mongoclient.connect", err);
+         return callback(err);
+      }
 
-     
+      db.collection(search_param.collection, function (err, col) {
+         if(err) {
+            errorMessage("database collection", err);
+            db.close();
+            return callback(err);
+         }
+
+         console.log("collection established to " + search_param.collection);
+         console.log("\n### QUERY ###");
+         console.log("doing a query: db." + search_param.collection +
+                     ".find(query);");
+         console.log(search_param.values);
+
+         col.find(search_param.values).toArray(function(err, doc) {
+            if(err) {
+               errorMessage("find query", err);
+               db.close();
+               return callback(err);
+            }
+
+            callback(null, doc[0]);
+            db.close();
+         });
+
+      });
+
+   });
+}

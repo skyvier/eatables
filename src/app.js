@@ -1,26 +1,41 @@
 var express = require('express'),
    app = express(),
    server = require('http').Server(app),
-   dbserver = require('mongodb').Server,
-   Db = require('mongodb').Db;
-   io = require('socket.io')(server);
+   io = require('socket.io')(server),
+   db = require('./mongodb_handler');
 
-var db = new Db('test', 
-   new dbserver('localhost', 27017, {}), { native_parser: false });
-
-if(db === null)
-   console.log("db is null");
+if(!db.init()) {
+   console.log("db fail");
+} else {
+   console.log("db success");
+}
 
 server.listen(1337);
 
 app.use(express.static('public'));
 
 io.on('connection', function (socket) {
-   console.log("got a connection");
-   socket.on('food_request', function (data) {
-      console.log("food request");
-      // add mongo query
-      io.emit('food_response', '{ testi: arvo }');
+   socket.on('query', function (data) {
+      if(!data) {
+         console.log("### EMPTY DATA PACKET ###");
+         return;
+      } 
+
+      db.query(data, function (err, res) {
+         if(err) {
+            console.log(err);
+            return;
+         }
+
+         if(!res) {
+            io.emit('food_response', 'No result.');
+            return;
+         }
+
+         console.log("\n### RESPONSE ###");
+         console.log(res);
+         io.emit('food_response', res);
+      });
    });
 });
 
