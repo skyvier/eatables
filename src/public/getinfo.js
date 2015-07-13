@@ -24,5 +24,28 @@ $(function () {
       socket.emit('query', searchParam);
       console.log("sent request");
    });
+
+   $("#insert_button").click(function () {
+      console.log("insert button pushed");
+      var insert_param = {
+         collection: "foods",
+         values: {
+            name: $("#name").val(),
+            type: $("#type_select").val(),
+            effort: $("#diff_slider").val()
+         }
+      };
+      console.log(insert_param);
+      console.log(insert_param.values);
+      socket.emit('insert', insert_param);
+      console.log("sent insert");
+   });
+
+   $("#diff_slider").change(function () {
+      var value = $("#diff_slider").val();
+      console.log(value);
+      $("#indicator").text(value);
+   });
+
 });
 

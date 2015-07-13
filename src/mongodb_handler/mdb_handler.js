@@ -15,8 +15,8 @@ var configSchema = {
    "required": ["server_url", "db_name"]
 };
 
-var searchParamSchema = {
-   "id": "/SearchParam",
+var dbObjectSchema = {
+   "id": "/DbObject",
    "type": "object",
    "properties": {
       "collection": { "type": "string" },
@@ -108,41 +108,64 @@ exports.init = function () {
    return true;
 }
 
-exports.query = function (search_param, callback) {
-   if(!checkValidity(search_param, searchParamSchema))
+exports.insert = db_operation.bind(null, operation_insert);
+exports.query = db_operation.bind(null, operation_query);
+
+function db_operation(operation, object, callback) {
+   if(!checkValidity(object, dbObjectSchema))
       callback("validity error");
 
    MongoClient.connect(mongo_url, function (err, db) {
       if(err) {
          errorMessage("mongoclient.connect", err);
-         return callback(err);
+         return callback(err, null);
       }
 
-      db.collection(search_param.collection, function (err, col) {
+      db.collection(object.collection, function (err, col) {
          if(err) {
             errorMessage("database collection", err);
             db.close();
             return callback(err);
          }
 
-         console.log("collection established to " + search_param.collection);
-         console.log("\n### QUERY ###");
-         console.log("doing a query: db." + search_param.collection +
-                     ".find(query);");
-         console.log(search_param.values);
+         var op_name = operation.name;
+         console.log("\n### " + op_name + " ###");
+         console.log("doing an " + op_name + ": db." + object.collection +
+                     "." + op_name + "(" + JSON.stringify(object.values, null, 4) + ")");
 
-         col.find(search_param.values).toArray(function(err, doc) {
+         operation(object, col, function (err, doc) {
             if(err) {
-               errorMessage("find query", err);
                db.close();
-               return callback(err);
+               return callback(err); 
             }
 
-            callback(null, doc[0]);
             db.close();
+            callback(null, doc);
          });
-
       });
 
    });
 }
+
+function operation_insert(object, collection, callback) {
+   collection.insert(object.values, { w:1 }, function (err, doc) {
+      if(err) {
+         errorMessage("insert query", err);
+         return callback(err);
+      }
+
+      callback(null, doc);
+   });
+}
+
+function operation_query(object, collection, callback) {
+   collection.find(object.values).toArray(function(err, doc) {
+      if(err) {
+         errorMessage("find query", err);
+         return callback(err);
+      }
+
+      callback(null, doc[0]);
+   });
+}
+

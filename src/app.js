@@ -37,6 +37,24 @@ io.on('connection', function (socket) {
          io.emit('food_response', res);
       });
    });
+
+   socket.on('insert', function (data) {
+      if(!data) {
+         console.log("### EMPTY DATA PACKET ###");
+         return;
+      }
+
+      db.insert(data, function (err, res) {
+         if(err) {
+            console.log(err);
+            return;
+         }
+
+         console.log("\n### RESPONSE ###");
+         console.log(res.result);
+      });
+   });
+
 });
 
 
