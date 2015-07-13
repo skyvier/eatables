@@ -1,7 +1,7 @@
 # eatables
 A web application for everyday meal planning.
 
-# configuration
+### configuration
 The application uses a MongoDB database. Database settings
 should be edited to config.json according to the following
 schema:
