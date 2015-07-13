@@ -6,6 +6,7 @@ The application uses a MongoDB database. Database settings
 should be edited to config.json according to the following
 schema:
 
+```
 {
   "type": "object"
   "properties": {
@@ -15,6 +16,6 @@ schema:
   },
   "required": ["server_url", "db_name"]
 }
-
+```
 If server_port isn't specified, eatables will use the
 standard port (27017).
