@@ -28,13 +28,13 @@ io.on('connection', function (socket) {
          }
 
          if(!res) {
-            io.emit('food_response', 'No result.');
+            socket.emit('query_response', 'No result.');
             return;
          }
 
          console.log("\n### RESPONSE ###");
          console.log(res);
-         io.emit('food_response', res);
+         socket.emit('query_response', res);
       });
    });
 
@@ -52,6 +52,7 @@ io.on('connection', function (socket) {
 
          console.log("\n### RESPONSE ###");
          console.log(res.result);
+         socket.emit('insert_response', res.result);
       });
    });
 

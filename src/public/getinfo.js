@@ -1,44 +1,40 @@
 $(function () {
-   var socket = io.connect('http://localhost:1337');
-   console.log("socket created!");
+   /*
+    * Socket.io functionalities
+   */
+   
+   var dataHandler = new dbHandler('localhost', 1337);
 
-   socket.on('food_response', function (data) {
-      console.log("got response");
-      if(typeof data == "string")
-         $("#foodinfo").text(data);
-      else
-         $("#foodinfo").text(data.type);
-   });
+   /*
+    * Site element functionalities
+   */
 
    $("#food_request").click(function () {
       console.log("button pushed");
-      console.log($("#foodname").val());
-      var searchParam = {
-         collection: "foods",
-         values: {
-            name: $("#foodname").val()
+      var obj = new dbObject('foods', { name: $("#foodname").val() });
+      dataHandler.queryObject(obj, function (err, data) {
+         console.log("got response");
+         if(err) {
+            $("#foodinfo").text(data);
+            return;
          }
-      };
-      console.log(searchParam);
-      console.log(searchParam.values);
-      socket.emit('query', searchParam);
-      console.log("sent request");
+
+         $("#foodinfo").text(JSON.stringify(data, null, 4));
+      });
    });
 
    $("#insert_button").click(function () {
       console.log("insert button pushed");
-      var insert_param = {
-         collection: "foods",
-         values: {
-            name: $("#name").val(),
-            type: $("#type_select").val(),
-            effort: $("#diff_slider").val()
-         }
-      };
-      console.log(insert_param);
-      console.log(insert_param.values);
-      socket.emit('insert', insert_param);
-      console.log("sent insert");
+      var obj = new dbObject('foods', 
+         { name: $("#name").val(),
+           type: $("#type_select").val(),
+           effort: $("#diff_slider").val()
+         });
+
+      dataHandler.insertObject(obj, function (err) {
+         if(err)
+            console.log(err);
+      });
    });
 
    $("#diff_slider").change(function () {
