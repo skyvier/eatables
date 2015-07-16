@@ -1,26 +1,45 @@
 $(function () {
-   /*
-    * Socket.io functionalities
-   */
-   
+   /* Socket.io functionalities */
    var dataHandler = new dbHandler('localhost', 1337);
 
    /*
     * Site element functionalities
    */
 
-   $("#food_request").click(function () {
-      console.log("button pushed");
-      var obj = new dbObject('foods', { name: $("#foodname").val() });
-      dataHandler.queryObject(obj, function (err, data) {
+   var resultTable = {};
+
+   dataHandler.onResponse('type_request', function (data) {
          console.log("got response");
-         if(err) {
-            $("#foodinfo").text(data);
+
+         $("#bytype").text(JSON.stringify(data, null, 4));
+         var resultTable = new eatables.table("theinfo", data.results);
+         resultTable.printTo("typeinfo");
+   });
+
+   dataHandler.onResponse('name_request', function (data) {
+         console.log("got response");
+         
+         // if the response wasn't a database object
+         if(!data._id) {
+            $("#foodinfo").text("No result");
             return;
          }
 
          $("#foodinfo").text(JSON.stringify(data, null, 4));
-      });
+   });
+
+   dataHandler.listen();
+
+   $("#type_request").click(function () {
+      console.log("type request pushed");
+      var obj = new dbObject('foods', { type: $("#foodtype").val() }, 'type_request');
+      dataHandler.queryObject(obj, 0);
+   });
+
+   $("#food_request").click(function () {
+      console.log("button pushed");
+      var obj = new dbObject('foods', { name: $("#foodname").val() }, 'name_request');
+      dataHandler.queryOneObject(obj);
    });
 
    $("#insert_button").click(function () {
@@ -31,10 +50,7 @@ $(function () {
            effort: $("#diff_slider").val()
          });
 
-      dataHandler.insertObject(obj, function (err) {
-         if(err)
-            console.log(err);
-      });
+      dataHandler.insertObject(obj);
    });
 
    $("#diff_slider").change(function () {
@@ -42,6 +58,5 @@ $(function () {
       console.log(value);
       $("#indicator").text(value);
    });
-
 });
 

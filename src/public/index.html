@@ -7,6 +7,13 @@ Find food information by name: <input type="text" id="foodname"> <button id="foo
 <br>
 <p id="foodinfo"></p>
 <br>
+Find food by type: <input type="text" id="foodtype"> <button id="type_request">Search</button>
+<br>
+<p id="bytype"></p>
+<br>
+<div id="typeinfo">
+</div>
+<br>
 <br>
 <fieldset>
 <legend>Add a food</legend>
@@ -22,8 +29,9 @@ Difficulty:
 <button id="insert_button">Send</button>
 </fieldset>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/eatables.js"></script>
 <script src="/dbscript.js"></script>
 <script src="/getinfo.js"></script>
-<script src="/socket.io/socket.io.js"></script>
 </body>
 </html>
