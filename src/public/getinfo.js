@@ -1,35 +1,33 @@
 $(function () {
-   /* Socket.io functionalities */
+   /* Variables */
+
    var dataHandler = new dbHandler('localhost', 1337);
+   var resultTable = {}; 
 
-   /*
-    * Site element functionalities
-   */
-
-   var resultTable = {};
+   /* Socket.io functionalities */
 
    dataHandler.onResponse('type_request', function (data) {
          console.log("got response");
 
          $("#bytype").text(JSON.stringify(data, null, 4));
-         var resultTable = new eatables.table("theinfo", data.results);
-         resultTable.printTo("typeinfo");
+         resultTable = new eatables.table("typeinfo", data.results);
+         resultTable.print();
+         resultTable.changeDom();
    });
 
    dataHandler.onResponse('name_request', function (data) {
          console.log("got response");
          
          // if the response wasn't a database object
-         if(!data._id) {
-            $("#foodinfo").text("No result");
-            return;
-         }
-
-         $("#foodinfo").text(JSON.stringify(data, null, 4));
+         $("#foodinfo").text(JSON.stringify(data.results, null, 4));
    });
 
    dataHandler.listen();
 
+   /*
+    * Site element functionalities
+   */
+   
    $("#type_request").click(function () {
       console.log("type request pushed");
       var obj = new dbObject('foods', { type: $("#foodtype").val() }, 'type_request');
@@ -39,7 +37,7 @@ $(function () {
    $("#food_request").click(function () {
       console.log("button pushed");
       var obj = new dbObject('foods', { name: $("#foodname").val() }, 'name_request');
-      dataHandler.queryOneObject(obj);
+      dataHandler.queryObject(obj, 1);
    });
 
    $("#insert_button").click(function () {

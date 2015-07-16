@@ -12,7 +12,6 @@ function dbObject(col, val, dest) {
    this.values = val;
 }
 
-
 /* A constructor for a database handler
  * 
  * @param url the url address for the database
@@ -23,7 +22,7 @@ function dbHandler(url, port) {
    this.socket = io.connect(url);
    this.destCallbacks = {};
 
-   this.socket.on('connect_failed', function () {
+   this.socket.on('connect_failey', function () {
       console.log("connection failed");
    });
 }
@@ -65,6 +64,9 @@ dbHandler.prototype.listen = function () {
          return;
       }
 
+      if(data.results.length === 0)
+         data.results.push({ error: "No result." });
+         
       // do something
       callbacks[destination](data);
    });
@@ -76,17 +78,8 @@ dbHandler.prototype.listen = function () {
  * @param object database object (dbObject)
 */
 dbHandler.prototype.insertObject = function (object) {
-   this.socket.emit('insert', object);
+   this.rawRequest(object, 'insert');
    console.log("insert request sent");
-};
-
-/* Queries a database object from the database.
- * A function of dbHandler.
- * 
- * @param object database object (dbObject)
-*/
-dbHandler.prototype.queryOneObject = function (object) {
-   this.rawQuery(object, 'query_one');
 };
 
 /* Queries multiple database objects from the database.
@@ -97,16 +90,21 @@ dbHandler.prototype.queryOneObject = function (object) {
 */
 dbHandler.prototype.queryObject = function (object, count) {
    object.options = { limit: count };
-   this.rawQuery(object, 'query');
+   this.rawRequest(object, 'query');
 };
 
 /*
- * Constains the raw query functionalities. 
+ * Constains the raw request functionalities. 
  * Should not be used by itself.
  *
  * @param object database object (dbObject)
  * @param type the type of the query
 */
-dbHandler.prototype.rawQuery = function (object, type) {
-   this.socket.emit(type, object);
+dbHandler.prototype.rawRequest = function (object, type) {
+   try {
+      this.socket.emit(type, object);
+   } catch(err) {
+      console.log("there was an error with a rawRequest type: " + type + ":");
+      console.log(err);
+   }
 };
