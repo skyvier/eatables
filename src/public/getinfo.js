@@ -2,17 +2,23 @@ $(function () {
    /* Variables */
 
    var dataHandler = new dbHandler('localhost', 1337);
-   var resultTable = {}; 
 
    /* Socket.io functionalities */
 
-   dataHandler.onResponse('type_request', function (data) {
-         console.log("got response");
+   var resultTable = new eatables.table("typeinfo", null, true, function (err) {
+      if(err) {
+         console.log("result table craetion error: " + err);
+         return;
+      }
 
-         $("#bytype").text(JSON.stringify(data, null, 4));
-         resultTable = new eatables.table("typeinfo", data.results);
-         resultTable.print();
-         resultTable.changeDom();
+      dataHandler.onResponse('type_request', function (data) {
+            console.log("got response");
+
+            $("#bytype").text(JSON.stringify(data, null, 4));
+
+            if(resultTable)
+               resultTable.changeData(data.results); 
+      });
    });
 
    dataHandler.onResponse('name_request', function (data) {

@@ -17,24 +17,33 @@ var eatables = eatables || {};
  * @param div id of the division
  * @param data the data array
 */
-eatables.table = function (_target, data) {
-   // var dom = $("_target") ?
-   var dom = $("<div id=" + _target + ">");
+eatables.table = function (_target, _data, sortable, callback) {
+   if(_target === undefined) {
+      if(typeof callback === 'function') 
+         return callback("table has no target");
+
+      return null;
+   }
+
+   if($("#" + _target).length === 0) {
+      if(typeof callback === 'function')
+         return callback("target element does not exist");
+
+      return null;
+   }
+
    var target = _target;
+   var tableDom;
 
-   var sortable = function () {
+   var makeSortable = function (dom) {
       var table = $("table", dom);
-      var title_row = $("td#row_title", table);
 
-      title_row.each(function () {
-         var index = title_row.index(this);
+      $("td#row_title", table).each(function () {
+         var index = $(this, table).index();
          var inverse = false;
-         console.log(index);
          
          $(this).click(function () {
-            console.log("I was clicked: " + index);
             table.find('td').not("#row_title").filter(function () {
-               console.log($(this, table).index());
                return $(this, table).index() === index;
             }).sortElements(function (a, b) {
                return $(a, table).text() > $(b, table).text() ?
@@ -46,42 +55,50 @@ eatables.table = function (_target, data) {
       });
    };
 
-   var row = function (elements, id) {
-      console.log("adding a row");
-
+   var row = function (target, elements, id) {
       for(var p in elements) {
-         dom.append("<td id=row_" + id + ">" + elements[p] + "</td>");
+         target.append("<td id=row_" + id + ">" + elements[p] + "</td>");
       }
 
-      $("td#row_" + id, dom).wrapAll("<tr></tr>");
+      $("td#row_" + id, target).wrapAll("<tr></tr>");
    };
 
-   var construct = function () {
-      row(Object.keys(data[0]), "title");
+   var constructDom = function (data) {
+      // you can also create a table without data
+      var dom = $("<div id=" + target + ">");
+
+      if(!data)
+         return dom;
+
+      row(dom, Object.keys(data[0]), "title");
       
       var i;
       for(i = 0; i < data.length; i++) {
-         row(data[i], i);
+         row(dom, data[i], i);
       }
 
       $("tr", dom).wrapAll("<table></table>");
 
-      sortable();
+      if(sortable)
+         makeSortable(dom);
+
+      $("div#" + target).replaceWith(dom);
+
+      return dom;
+   };
+
+   var construct = function () {
+      tableDom = constructDom(_data);
+      callback(null);
    }();
 
-   this.print = function () {
-      if($("div#" + target).length)
-         $("div#" + target).replaceWith(dom);
-      else
-         console.log("the target doesn't exist");
+   this.printTo = function (_target) {
+      $("div#" + _target).replaceWith(dom);
    };
 
-   this.changeDom = function () {
-      dom.append("<p>Hello</p>");
+   this.changeData = function (_data) { 
+      tableDom = constructDom(_data);
    };
-
-
-   this.changeTarget = function (_target) { target = _target; };
 }
 
 

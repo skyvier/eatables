@@ -28,13 +28,11 @@ function dbHandler(url, port) {
 }
 
 dbHandler.prototype.onResponse = function (dest, callback) {
-   console.log("adding a response callback");
+   console.log("adding a response callback for " + dest);
    if(typeof callback === 'function')
       this.destCallbacks[dest] = callback;   
    else
       console.log("the callback was not a function");
-
-   console.log(JSON.stringify(this.destCallbacks, null, 4));
 };
 
 // TODO: move these back to the constructor
@@ -55,8 +53,6 @@ dbHandler.prototype.listen = function () {
 
       if(destination === undefined)
          return;
-
-      console.log(destination);
 
       if(callbacks[destination] === undefined) {
          console.log("a lost query response registered:");
