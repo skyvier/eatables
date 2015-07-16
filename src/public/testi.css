@@ -1,0 +1,171 @@
+body {
+	background-color: #DDF9FD;
+}
+
+a {
+	color: #FCFCFC;
+	text-decoration: none;
+}
+
+a:hover {
+	color: #DDF9FD;
+	text-decoration: none;	
+}
+
+div.ots1 {
+	font-family: Impact;
+	font-size: 240px;
+	color: #474747;
+	float: left;
+	padding-left: 80px;
+	padding-top: 40px;
+	padding-right: 5px;
+	
+}
+
+div.ots2{
+	font-family: Impact;
+	font-size: 50px;
+	color: #474747;
+	padding-top: 90px;
+}
+
+
+table.links {
+	//margin-left: -180px;
+	//margin-top: 200px;
+	padding: 20px;
+	padding-left: 150px;
+	padding-right: 200px;
+	border-top-right-radius: 4em;
+	//width: 600px;
+	background-color: #4EC8D9;
+	//display: inline;
+	//float: left;
+	//table-layout: fixed;
+	
+}
+
+table.links tr {
+	padding-right: 30px;
+	text-align: center;
+	color: #FCFCFC;
+	font-family: Arial;
+	font-weight: 900;
+}
+
+table.links td {
+	align: center;
+	padding-left: 30px;
+	padding-right: 30px;
+	text-align: center;
+}
+
+
+div.boxi {
+	background-color: #FCFCFC;
+	width: 875px;
+    	height: 600px;
+    	border: 1px dashed #2DADBF;
+	padding: 20px;
+	padding-top: 20px;
+	float: left;
+	margin-top: 10px;
+	overflow: hidden;
+}
+
+h1.otsikko {
+	font-family: Impact;
+	letter-spacing: 2px;
+	color: #0C9DB1;
+	//text-align: center;
+	position: relative;
+	left: 50px;
+}
+
+h2.otsikko {
+	font-family: Impact;
+	letter-spacing: 1px;
+	font-size: 20px;
+	color: #0C9DB1;
+	text-align: center;
+	//position: relative;
+	//left: 70px;
+	font-weight: 100;
+}
+
+p {
+	
+	font-family: Tahoma;
+	font-size: 14px;
+	letter-spacing: 1px;
+	line-height: 130%;
+	color: #474747;
+	
+}
+
+
+p.copy {
+	font-family: Tahoma;
+	font-size: 14px;
+	letter-spacing: 0.5px;
+	line-height: 130%;
+	width: 170px;
+	height: 300px;
+	position: absolute;
+	margin-top: 150px;
+	text-align: right;
+	color: #2DADBF;
+}
+
+div.foodtable{
+	width:400px;
+	height:400px;
+	overflow:auto;
+	border-top:1px solid #2DADBF;
+	border-bottom:1px solid #2DADBF;
+	float:left;
+}
+
+table.foods {
+	
+	font-family: Arial;
+	font-size: 14px;
+	line-height: 200%;
+}
+
+table.foods th {
+	font-family: Arial;
+	font-weight: 90;
+	font-size: 16px;
+	background-color: #2DADBF;
+	color: white;
+}
+
+table.foods tr:nth-child(odd) {
+	background-color: #DDF9FD;
+}
+
+table.foods tr:nth-child(even) {
+	background-color: white;
+}
+
+
+table.foods td {
+	
+	color: #474747;
+}
+
+div.foodbox {
+	border-left:1px dashed #2DADBF;
+	width:450px;
+	height: 400px;
+	padding-left: 10px;
+	float:right;
+}
+
+
+form {
+	font-family: Tahoma;
+	font-size: 14px;
+}
