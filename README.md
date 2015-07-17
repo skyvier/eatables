@@ -1,5 +1,5 @@
 # eatables
-A web application for everyday meal planning.
+A Node.js web application for everyday meal planning.
 
 ### configuration
 The application uses a MongoDB database. Database settings
@@ -17,5 +17,5 @@ schema:
   "required": ["server_url", "db_name"]
 }
 ```
-If server_port isn't specified, eatables will use the
+If `server_port` isn't specified, eatables will use the
 standard port (27017).
