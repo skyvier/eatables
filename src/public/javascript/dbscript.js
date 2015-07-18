@@ -24,7 +24,7 @@ function dbHandler(url, port) {
    this.socket = io.connect(url);
    this.destCallbacks = {};
 
-   this.socket.on('connect_failey', function () {
+   this.socket.on('connect_failed', function () {
       console.log("connection failed");
    });
 }
