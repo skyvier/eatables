@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<LINK href="testi.css" rel="stylesheet" type="text/css">
+<LINK href="./style/testi.css" rel="stylesheet" type="text/css">
 <title>Eatables</title>
 </head>
 
@@ -10,7 +10,7 @@
 
 <div class="ots1">E</div>
 
-<div style="position:absolute; margin-left: 1000px; margin-top: 100px"><img src="pottu.png"></div>
+<div style="position:absolute; margin-left: 1000px; margin-top: 100px"><img src="./resources/pottu.png"></div>
 
 <div class="ots2" >AT<div style="color:#2DADBF; display: inline">ABLES</div></div>
 
@@ -30,23 +30,24 @@ FoodsEvenMoreMuch YesYes.
 <br><br>
 Yay.
 <br>
-<img src="strawberry.png">
+<img src="./resources/strawberry.png">
 </p>
 
 <div class="boxi">
 
 <h1 class="otsikko">EatMuch.</h1>
 
-<p>
-testi testi testi testi testi testi testi testi testi testi testi testi 
-testi testi testi testi testi testi testi testi testi testi testi testi 
+<button id="main">Main</button> <button id="dessert">Dessert</button>
+
+<p>testi testi testi testi testi testi testi testi testi testi testi testi 
 testi testi testi testi testi testi testi testi testi testi testi testi 
 testi testi testi testi testi testi testi testi testi testi testi testi 
 testi testi testi testi testi testi testi testi testi testi testi testi </p>
 
 
 <div class="foodtable">
-<table class="foods">
+<div id="foods">
+<table>
 	<tr>
 	<th>Name</th>
 	<th>Time</th>
@@ -63,8 +64,9 @@ testi testi testi testi testi testi testi testi testi testi testi testi </p>
 	<td>20</td>
 	<td>23.23.2300</td>
 	</tr>
-	
 </table>
+</div>
+<input type="text" id="search_foods">
 </div>
 
 <div class="foodbox">
@@ -79,9 +81,12 @@ testi testi testi testi testi testi testi testi testi testi testi testi </p>
 </div>
 </div>
 
-
-
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/javascript/sortElements/jquery.sortElements.js"></script>
+<script src="/javascript/dbscript.js"></script>
+<script src="/javascript/eatables.js"></script>
+<script src="/javascript/foods.js"></script>
 
 </body>
 </html>

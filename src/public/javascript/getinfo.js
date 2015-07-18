@@ -3,7 +3,7 @@ $(function () {
 
    var dataHandler = new dbHandler('localhost', 1337);
 
-   /* Socket.io functionalities */
+   /* dbHandler functionalities */
 
    var resultTable = new eatables.table("typeinfo", null, true, function (err) {
       if(err) {

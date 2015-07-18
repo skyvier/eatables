@@ -36,7 +36,7 @@ function checkValidity(param, schema) {
    var i;
    var report = v.validate(param, schema); 
 
-   if(report.errors.length == 0) 
+   if(report.errors.length === 0) 
      return true;
 
    console.log(schema.id + " file is not valid: ");
@@ -48,9 +48,10 @@ function checkValidity(param, schema) {
 
 function openConfig() {
    var fs = require('fs');
+   var data;
 
    try {
-      var data = fs.readFileSync('config.json', 'utf8');
+      data = fs.readFileSync('config.json', 'utf8');
    } catch(err) {
       console.log(err);
       return false;
@@ -90,6 +91,30 @@ function errorMessage(entity, error) {
    console.log("there was an error with " + entity + ": " + error);
 }
 
+function detectRegex(object) {
+   var i, regex, obj, prop;
+
+   console.log("\nDetecting regular expressions...");
+
+   var objs = Object.keys(object).filter(function (value) {
+      return typeof object[value] === 'object';
+   });
+
+   if(objs.length === 0) {
+      return;
+   }
+
+   for(i = 0; i < objs.length; i++) {
+      var obj = object[objs[i]];
+      for(prop in obj) {
+         if(prop === '$regex') {
+            console.log("Found regular expression in " + prop);
+            object[objs[i]] = new RegExp(obj[prop][0], obj[prop][1]);
+         }   
+      } 
+   }
+}
+
 function dbOperation(operation, options, object, callback) {
    if(!checkValidity(object, dbObjectSchema))
       callback("validity error");
@@ -107,12 +132,14 @@ function dbOperation(operation, options, object, callback) {
             return callback(err);
          }
 
+         detectRegex(object.values);
+
          var opName = operation.name;
          console.log("\n### " + opName + " ###");
          console.log("doing an " + opName + ": db." + object.collection +
                      "." + opName + "(" + JSON.stringify(object.values, null, 4) + ")");
          console.log(options);
-
+         
          operation(object, col, options, function (err, doc) {
             if(err) {
                db.close();
@@ -146,10 +173,7 @@ function queryOperation(object, collection, options, callback) {
       }
 
       var output = {};
-      if(doc.length === 1)
-         output.results = doc[0];
-      else
-         output.results = doc;
+      output.results = doc;
 
       if(object.destination === undefined)
          output.destination = 'unknown';
@@ -192,7 +216,7 @@ exports.init = function () {
 
    console.log("the mongodb server " + mongoUrl + " is operational");
    return true;
-}
+};
 
 /*
  * Database findOne() and insert() operations.

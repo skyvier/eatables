@@ -118,7 +118,7 @@ p.copy {
 	color: #2DADBF;
 }
 
-div.foodtable{
+div.foodtable {
 	width:400px;
 	height:400px;
 	overflow:auto;
@@ -127,14 +127,14 @@ div.foodtable{
 	float:left;
 }
 
-table.foods {
+div.foodtable table {
 	
 	font-family: Arial;
 	font-size: 14px;
 	line-height: 200%;
 }
 
-table.foods th {
+div.foodtable th {
 	font-family: Arial;
 	font-weight: 90;
 	font-size: 16px;
@@ -142,16 +142,23 @@ table.foods th {
 	color: white;
 }
 
-table.foods tr:nth-child(odd) {
+div.foodtable td#row_title {
+	font-family: Arial;
+	font-weight: 90;
+	font-size: 16px;
+	background-color: #2DADBF;
+	color: white;
+}
+
+div.foodtable tr:nth-child(odd) {
 	background-color: #DDF9FD;
 }
 
-table.foods tr:nth-child(even) {
+div.foodtable tr:nth-child(even) {
 	background-color: white;
 }
 
-
-table.foods td {
+div.foodtable td {
 	
 	color: #474747;
 }

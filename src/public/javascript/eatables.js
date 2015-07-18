@@ -99,6 +99,6 @@ eatables.table = function (_target, _data, sortable, callback) {
    this.changeData = function (_data) { 
       tableDom = constructDom(_data);
    };
-}
+};
 
 

@@ -1,5 +1,7 @@
 /* Database functions for eatables */
 
+// TODO: AJAX instead of socket.io
+
 /* A constructor for a database object based on
  * dbObjectSchema in the mongodb_handler package.
  * 
@@ -85,7 +87,7 @@ dbHandler.prototype.insertObject = function (object) {
  * @param count the amount of results wanted (0 = all)
 */
 dbHandler.prototype.queryObject = function (object, count) {
-   object.options = { limit: count };
+   object.options = { limit: count, fields: { _id: 0 } };
    this.rawRequest(object, 'query');
 };
 
