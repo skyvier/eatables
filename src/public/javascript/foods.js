@@ -18,6 +18,10 @@ $(function () {
 
    var currentType = "Main";
 
+   /* Food information functionalities */
+   
+   var foodInfo = new eatables.structure($("div.foodbox"));
+
    /* Table functionalities */
 
    // creates a sortable table with no data
@@ -32,9 +36,15 @@ $(function () {
       dataHandler.onResponse('type_request', function (data) {
             console.log("got response");
 
-            if(resultTable)
+            if(resultTable) 
                resultTable.changeData(data.results); 
       });
+   });
+
+   resultTable.onClick("tr", function (data) {
+      console.log("got data");
+      console.log(JSON.stringify(data, null, 4));
+      foodInfo.change("h2.otsikko", "text", data.name);
    });
 
    /* dbHandler functionalities */

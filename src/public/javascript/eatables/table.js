@@ -8,6 +8,7 @@ var eatables = eatables || {};
 /* Data presentation functions */
 
 // TODO: clean this mess
+// JS and OOP ftw.
 
 /*
  * Creates a html table object that can be
@@ -39,7 +40,9 @@ eatables.table = function (_target, _data, sortable, callback) {
    var data = _data; // the source data
    var target = _target; // the id of the current target (div)
    var output = _data; // (filtered) data
-   var dom; // the jquery object representing the html
+   var dom;
+   
+   var clickHandlers = {};
 
    /* Private functions */
 
@@ -59,8 +62,26 @@ eatables.table = function (_target, _data, sortable, callback) {
             }, function () { return this.parentNode; });
 
             inverse = !inverse;
+
+            makeClickable();
          });
       });
+   };
+
+   var makeClickable = function () {
+      var selector;
+      for(selector in clickHandlers) {
+         $(selector, dom).click(function () {
+            var id = $(this).attr("id");
+
+            if(id === 'row_title')
+               return;
+
+            id = Number(id.charAt(id.length-1));;
+            console.log(id);
+            return clickHandlers[selector](output[id]);
+         });
+      }
    };
 
    var row = function (target, elements, id) {
@@ -68,7 +89,7 @@ eatables.table = function (_target, _data, sortable, callback) {
          target.append("<td id=row_" + id + ">" + elements[p] + "</td>");
       }
 
-      $("td#row_" + id, target).wrapAll("<tr></tr>");
+      $("td#row_" + id, target).wrapAll("<tr id=row_" + id + "></tr>");
    };
 
    // you can also create a table without data
@@ -88,7 +109,9 @@ eatables.table = function (_target, _data, sortable, callback) {
       $("tr", dom).wrapAll("<table></table>");
 
       if(sortable)
-         makeSortable(dom);
+         makeSortable();
+
+      makeClickable();
    };
 
    var construct = function () {
@@ -108,13 +131,26 @@ eatables.table = function (_target, _data, sortable, callback) {
    /* Priviledged functions */
 
    /*
-    * Function print the table to a dom element (div).
+    * Function prints the table to a dom element (div).
     *
     * @param _target the id of the target element
    */
    this.printTo = function (_target) {
       target = _target;
       print();
+   };
+
+   /*
+    * Function get data from the clicked row.
+    * The handler calls the callback function with the data
+    * of the clicked element.
+    *
+    * @param selector the css selector of the object(s)
+    * @param callback a callback function
+   */
+   this.onClick = function (selector, callback) {
+      console.log("adding a click handler for: " + selector);
+      clickHandlers[selector] = callback;
    };
 
    /*
@@ -145,11 +181,10 @@ eatables.table = function (_target, _data, sortable, callback) {
       }
 
       if(output.length === 0)
-         output = [{ error: "No result" }];
+         output = [{ Error: "No result" }];
 
       constructDom();
       print();
    };
 };
-
 
