@@ -45,9 +45,10 @@ $(function () {
    });
 
    $("#search_foods").keyup(function () {
-      var obj = new dbObject('foods', { type: currentType, 
-      name: new dbRegex("^" + $(this).val(), "i") }, 'type_request'); 
-      dataHandler.queryObject(obj, 0);
+      //var obj = new dbObject('foods', { type: currentType, 
+      //name: new dbRegex("^" + $(this).val(), "i") }, 'type_request'); 
+      //dataHandler.queryObject(obj, 0);
+      resultTable.filterData("name", new RegExp("^" + $(this).val(), "i"));
    });
 
 });

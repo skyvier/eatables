@@ -7,7 +7,6 @@ var eatables = eatables || {};
 
 /* Data presentation functions */
 
-
 // TODO: clean this mess
 
 /*
@@ -20,24 +19,31 @@ var eatables = eatables || {};
  * @param callback the callback(err) function
 */
 eatables.table = function (_target, _data, sortable, callback) {
-   if(_target === undefined) {
-      if(typeof callback === 'function') 
-         return callback("table has no target");
 
+   /* Error handling */
+
+   callback = callback || console.log;
+
+   if(_target === undefined) {
+      callback("table has no target");
       return null;
    }
 
    if($("#" + _target).length === 0) {
-      if(typeof callback === 'function')
-         return callback("target element does not exist");
-
+      callback("target element does not exist");
       return null;
    }
 
-   var target = _target;
-   var tableDom;
+   /* Variables */
 
-   var makeSortable = function (dom) {
+   var data = _data; // the source data
+   var target = _target; // the id of the current target (div)
+   var output = _data; // (filtered) data
+   var dom; // the jquery object representing the html
+
+   /* Private functions */
+
+   var makeSortable = function () {
       var table = $("table", dom);
 
       $("td#row_title", table).each(function () {
@@ -66,40 +72,83 @@ eatables.table = function (_target, _data, sortable, callback) {
    };
 
    // you can also create a table without data
-   var constructDom = function (data) {
-      var dom = $("<div id=" + target + ">");
+   var constructDom = function () {
+      dom = $("<div id=" + target + ">");
       var i;
 
-      if(!data)
-         return dom;
+      if(!output)
+         return;
 
-      row(dom, Object.keys(data[0]), "title");
+      row(dom, Object.keys(output[0]), "title");
       
-      for(i = 0; i < data.length; i++) {
-         row(dom, data[i], i);
+      for(i = 0; i < output.length; i++) {
+         row(dom, output[i], i);
       }
 
       $("tr", dom).wrapAll("<table></table>");
 
       if(sortable)
          makeSortable(dom);
-
-      $("div#" + target).replaceWith(dom);
-
-      return dom;
    };
 
    var construct = function () {
-      tableDom = constructDom(_data);
+      constructDom();
       callback(null);
    }();
 
-   this.printTo = function (_target) {
-      $("div#" + _target).replaceWith(dom);
+   var print = function () {
+      $("#" + target).replaceWith(dom);
    };
 
+   var setData = function (_data) {
+      data = _data;
+      output = data;
+   };
+
+   /* Priviledged functions */
+
+   /*
+    * Function print the table to a dom element (div).
+    *
+    * @param _target the id of the target element
+   */
+   this.printTo = function (_target) {
+      target = _target;
+      print();
+   };
+
+   /*
+    * Function changes the source data for the table. 
+    *
+    * @param _data the data array 
+   */
    this.changeData = function (_data) { 
-      tableDom = constructDom(_data);
+      setData(_data);
+      constructDom();
+      print();
+   };
+
+   /*
+    * Function filters the output according to a regex. 
+    *
+    * @param prop the property to filter 
+    * @param regex a JS RegExp object
+   */
+   this.filterData = function (prop, regex) {
+      try {
+         output = data.filter(function (value) {
+            return regex.test(value[prop]);
+         });
+      } catch(err) {
+         console.log("there was an error with filterData: " + err);
+         return;
+      }
+
+      if(output.length === 0)
+         output = [{ error: "No result" }];
+
+      constructDom();
+      print();
    };
 };
 
