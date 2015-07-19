@@ -15,6 +15,15 @@ server.listen(1337);
 
 app.use(express.static('public'));
 
+// simple error handling
+app.post('/error', function (req, res) {
+   if(!req)
+      return;
+
+   console.log("#### ERROR ####");
+   console.log(req.error);
+});
+
 io.on('connection', function (socket) {
    /* This won't be needed in the future */
    socket.on('query', function (data) {

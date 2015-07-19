@@ -34,13 +34,18 @@ function dbRegex(expression, flags) {
  * @param url the url address for the database
  * @param val the port of the database
 */
-function dbHandler(url, port) {
+function dbHandler(url, port, callback) {
    url = url + ':' + port;
-   this.socket = io.connect(url);
+   try {
+      this.socket = io.connect(url);
+   } catch(err) {
+      callback(err);
+   }
+
    this.destCallbacks = {};
 
    this.socket.on('connect_failed', function () {
-      console.log("connection failed");
+      callback("connection failed");
    });
 }
 
