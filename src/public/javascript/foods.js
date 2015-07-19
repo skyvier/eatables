@@ -1,7 +1,7 @@
 $(function () {
    /* Variables */
 
-   var dataHandler = new dbHandler('localhost', 337, function () {
+   var dataHandler = new dbHandler('localhost', 1337, function () {
       // if an error occurs, change the page to an error page
       // TODO: make this work
       if(err) {
