@@ -18,6 +18,8 @@ app.use(express.static('public'));
 io.on('connection', function (socket) {
    /* This won't be needed in the future */
    socket.on('query', function (data) {
+      console.log("\n### QUERY REQUEST ###");
+
       if(!data) {
          console.log("### EMPTY DATA PACKET ###");
          return;
@@ -36,6 +38,8 @@ io.on('connection', function (socket) {
    });
 
    socket.on('insert', function (data) {
+      console.log("\n### INSERT REQUEST ###");
+
       if(!data) {
          console.log("### EMPTY DATA PACKET ###");
          return;

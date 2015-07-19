@@ -118,7 +118,7 @@ p.copy {
 	color: #2DADBF;
 }
 
-div.foodtable {
+div.table_div {
 	width:400px;
 	height:400px;
 	overflow:auto;
@@ -127,14 +127,14 @@ div.foodtable {
 	float:left;
 }
 
-div.foodtable table {
+div.table_div table {
 	
 	font-family: Arial;
 	font-size: 14px;
 	line-height: 200%;
 }
 
-div.foodtable th {
+div.table_div th {
 	font-family: Arial;
 	font-weight: 90;
 	font-size: 16px;
@@ -142,7 +142,7 @@ div.foodtable th {
 	color: white;
 }
 
-div.foodtable td#row_title {
+div.table_div td#row_title {
 	font-family: Arial;
 	font-weight: 90;
 	font-size: 16px;
@@ -150,15 +150,15 @@ div.foodtable td#row_title {
 	color: white;
 }
 
-div.foodtable tr:nth-child(odd) {
+div.table_div tr:nth-child(odd) {
 	background-color: #DDF9FD;
 }
 
-div.foodtable tr:nth-child(even) {
+div.table_div tr:nth-child(even) {
 	background-color: white;
 }
 
-div.foodtable td {
+div.table_div td {
 	
 	color: #474747;
 }
@@ -171,8 +171,18 @@ div.foodbox {
 	float:right;
 }
 
-
 form {
 	font-family: Tahoma;
 	font-size: 14px;
+}
+
+input[type="text"].typical {
+   padding: 5px;
+   border: solid 1px #dcdcdc;
+   transition: box-shadow 0.3s, border 0.3s;
+}
+
+input[type="text"].typical:focus {
+   border: solid 1px #707070;
+   box-shadow: 0 0 5px 1px #969696;
 }

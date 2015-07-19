@@ -8,14 +8,16 @@ var eatables = eatables || {};
 /* Data presentation functions */
 
 
-// TODO: just change the dom to the new data
-// dont create a new table
+// TODO: clean this mess
 
 /*
- * Adds a table object to a division.
+ * Creates a html table object that can be
+ * moved, changed and sorted.
  *
- * @param div id of the division
- * @param data the data array
+ * @param _target id of the target dom
+ * @param _data the data array (can be null)
+ * @param sortable true for sortable table
+ * @param callback the callback(err) function
 */
 eatables.table = function (_target, _data, sortable, callback) {
    if(_target === undefined) {
@@ -63,16 +65,16 @@ eatables.table = function (_target, _data, sortable, callback) {
       $("td#row_" + id, target).wrapAll("<tr></tr>");
    };
 
+   // you can also create a table without data
    var constructDom = function (data) {
-      // you can also create a table without data
       var dom = $("<div id=" + target + ">");
+      var i;
 
       if(!data)
          return dom;
 
       row(dom, Object.keys(data[0]), "title");
       
-      var i;
       for(i = 0; i < data.length; i++) {
          row(dom, data[i], i);
       }

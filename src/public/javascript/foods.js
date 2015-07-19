@@ -6,6 +6,7 @@ $(function () {
 
    /* dbHandler functionalities */
 
+   // creates a sortable table with no data
    var resultTable = new eatables.table("foods", null, true, function (err) {
       if(err) {
          console.log("result table craetion error: " + err);
@@ -45,7 +46,7 @@ $(function () {
 
    $("#search_foods").keyup(function () {
       var obj = new dbObject('foods', { type: currentType, 
-      name: { $regex: ["^" + $(this).val(), "i"]  }}, 'type_request'); 
+      name: new dbRegex("^" + $(this).val(), "i") }, 'type_request'); 
       dataHandler.queryObject(obj, 0);
    });
 

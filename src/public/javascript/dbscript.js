@@ -1,6 +1,7 @@
 /* Database functions for eatables */
 
 // TODO: AJAX instead of socket.io
+// or keep using it for practice
 
 /* A constructor for a database object based on
  * dbObjectSchema in the mongodb_handler package.
@@ -12,6 +13,20 @@ function dbObject(col, val, dest) {
    this.destination = dest;
    this.collection = col;
    this.values = val;
+}
+
+/*
+ * A constructor for a database regular expression.
+ *
+ * For some reason the javascript RegExp object
+ * doesn't seem to survive the transmission to server.
+ * It'll be created on the server side.
+ *
+ * @param expression regular expression
+ * @param flags regexp flags
+*/
+function dbRegex(expression, flags) {
+   this.$regex = [expression, flags || ""];
 }
 
 /* A constructor for a database handler
@@ -29,6 +44,13 @@ function dbHandler(url, port) {
    });
 }
 
+/*
+ * Define a function for handling a response.
+ * This is an obvious downside of using socket.io.
+ *
+ * @param dest response destination identifier
+ * @param callback the destination function for the response 
+*/
 dbHandler.prototype.onResponse = function (dest, callback) {
    console.log("adding a response callback for " + dest);
    if(typeof callback === 'function')
@@ -38,6 +60,11 @@ dbHandler.prototype.onResponse = function (dest, callback) {
 };
 
 // TODO: move these back to the constructor
+/*
+ * This function defines the action to be taken on
+ * a socket response. The response destinations
+ * should be added first through onResponse.
+*/
 dbHandler.prototype.listen = function () {
    this.socket.on('insert_response', function (data) {
       if(data.ok !== 1) 
@@ -66,6 +93,7 @@ dbHandler.prototype.listen = function () {
          data.results.push({ error: "No result." });
          
       // do something
+      // NOTE: handle errors on the other side
       callbacks[destination](data);
    });
 };
