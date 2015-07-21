@@ -1,37 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script>
+$(function () {
+   $("#linkbar").load("./link_bar.html");
+   $("#infobar").load("./info_bar.html");
+});
+</script>
 <meta charset="UTF-8">
 <LINK href="./style/testi.css" rel="stylesheet" type="text/css">
 <title>Eatables</title>
 </head>
-
 <body>
 
-<div class="ots1">E</div>
+<div id="linkbar"></div>
 
-<div style="position:absolute; margin-left: 1000px; margin-top: 100px"><img src="./resources/pottu.png"></div>
-
-<div class="ots2" >AT<div style="color:#2DADBF; display: inline">ABLES</div></div>
-
-
-
-<table class="links">
-	<tr>
-		<td><a href="index.html">INDEX</a></td>
-		<td><a href="foods.html">FOODS</a></td>
-		<td><a href="ingre.html">INGREDIENTS</a></td>
-		<td><a href="search.html">SEARCH</a></td>
-	</tr>
-</table>
-
-<p class="copy">CopyrightMuchYes
-FoodsEvenMoreMuch YesYes.
-<br><br>
-Yay.
-<br>
-<img src="./resources/strawberry.png">
-</p>
+<div id="infobar"></div>
 
 <div class="boxi">
 
@@ -81,7 +66,6 @@ testi testi testi testi testi testi testi testi testi testi testi testi </p>
 </div>
 </div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="/socket.io/socket.io.js"></script>
 <script src="/javascript/sortElements/jquery.sortElements.js"></script>
 <script src="/javascript/dbscript.js"></script>
