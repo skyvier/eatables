@@ -18,18 +18,18 @@ $(function () {
 
    var currentType = "Main";
 
+   /* Food information functionalities */
+   
+   var foodInfo = new eatables.structure($("div.foodbox"));
+
+   /* Table functionalities */
+
    var foodTableTitles = {
       name: "Name",
       time: "Time",
       portions: "Portions",
       effort: "Effort"
    };
-
-   /* Food information functionalities */
-   
-   var foodInfo = new eatables.structure($("div.foodbox"));
-
-   /* Table functionalities */
 
    // creates a sortable table with no data
    var resultTable = new eatables.table("foods", null, foodTableTitles, 
