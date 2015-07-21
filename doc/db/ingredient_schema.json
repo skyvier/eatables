@@ -1,0 +1,29 @@
+{
+   "id": "/Ingredient",
+   "type": "object",
+   "properties": {
+      "id": { "type": "integer" },
+      "name": { "type": "string" },
+      "manufacturer": { "type": "string" },
+      "type": {
+         "description": "such as meat, liquid, spices etc.",
+         "type": "string"
+      },
+      "measure": {
+         "description": "amount of ingredient in the appropriate unit",
+         "type": "integer"
+      },
+      "price": { 
+         "description": "price of the product",
+         "type": "integer"
+      },
+      "sources": {
+         "description": "shops where this product is available",
+         "type": "array",
+         "items": {
+            "type": "string"
+         }
+      }
+   },
+   "required": ["id", "name", "type", "measure"]
+}

@@ -1,0 +1,54 @@
+{
+   "id": "/Food",
+   "type": "object",
+   "properties": {
+      "id": { "type": "integer" },
+      "name": { "type": "string" },
+      "type": { 
+         "description": "Type of the dish: Main, Dessert, Appetizer, Drink...",
+         "type": "string" 
+      },
+      "effort": { 
+         "description": "The level of complexity of the dish",
+         "type": "integer",
+         "minimum": 1,
+         "maximum": 3 
+       },
+      "time": { 
+         "description": "the amount of time it takes to prepare the food in minutes",
+         "type": "integer"
+      },
+      "portions": { 
+         "description": "the amount of portions prepared by the recipe",
+         "type": "integer" 
+      },
+      "ingredients": { 
+         "type": "array",
+         "items": {
+            "type": "object",
+            "$ref": "ingredient_schema"
+         }
+      },
+      "instructions": { 
+         "description": "the recipe",
+         "type": "string" 
+      },
+      "popularity": {
+         "description": "count of the times this food has been prepared",
+         "type": "integer"
+      },
+      "last_eaten": {
+         "description": "last time this food was prepared",
+         "type": "object"
+      },
+      "pictures": {
+         "description": "food picture paths",
+         "type": "array",
+         "items": {
+            "type": "string"
+         } 
+      }
+   },
+   "required": ["id", "name"]
+}
+
