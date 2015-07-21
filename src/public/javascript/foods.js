@@ -18,6 +18,13 @@ $(function () {
 
    var currentType = "Main";
 
+   var foodTableTitles = {
+      name: "Name",
+      time: "Time",
+      portions: "Portions",
+      effort: "Effort"
+   };
+
    /* Food information functionalities */
    
    var foodInfo = new eatables.structure($("div.foodbox"));
@@ -25,7 +32,9 @@ $(function () {
    /* Table functionalities */
 
    // creates a sortable table with no data
-   var resultTable = new eatables.table("foods", null, true, function (err) {
+   var resultTable = new eatables.table("foods", null, foodTableTitles, 
+      true, function (err) {
+
       if(err) {
          console.log("result table craetion error: " + err);
          return;
@@ -43,8 +52,12 @@ $(function () {
 
    resultTable.onClick("tr", function (data) {
       console.log("got data");
-      console.log(JSON.stringify(data, null, 4));
+      var alaotsikko = data.type + " / " + data.effort;
       foodInfo.change("h2.otsikko", "text", data.name);
+      foodInfo.change("h3.alaotsikko", "text", alaotsikko);
+      foodInfo.change("td#time", "text", data.time || "-"),
+      foodInfo.change("td#portions", "text", data.portions || "-");
+      foodInfo.change("td#recipe", "text", data.recipe || "-");
    });
 
    /* dbHandler functionalities */

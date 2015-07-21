@@ -29,7 +29,7 @@
             "$ref": "ingredient_schema"
          }
       },
-      "instructions": { 
+      "recipe": { 
          "description": "the recipe",
          "type": "string" 
       },

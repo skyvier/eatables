@@ -186,3 +186,19 @@ input[type="text"].typical:focus {
    border: solid 1px #707070;
    box-shadow: 0 0 5px 1px #969696;
 }
+
+h3.alaotsikko {
+	font-family: Impact;
+	font-size: 15px;
+   font-style: italic;
+	color: #0C9DB1;
+	text-align: center;
+	font-weight: 100;
+}
+
+div.table_div td.info {
+	color: #0C9DB1;
+	font-family: Impact;
+   font-weight: bold;
+}
+

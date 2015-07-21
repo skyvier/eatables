@@ -16,10 +16,11 @@ var eatables = eatables || {};
  *
  * @param _target id of the target dom
  * @param _data the data array (can be null)
+ * @param _titles the data value titles (can be null)
  * @param sortable true for sortable table
  * @param callback the callback(err) function
 */
-eatables.table = function (_target, _data, sortable, callback) {
+eatables.table = function (_target, _data, _titles, sortable, callback) {
 
    /* Error handling */
 
@@ -35,11 +36,17 @@ eatables.table = function (_target, _data, sortable, callback) {
       return null;
    }
 
+   if(typeof callback !== 'function') {
+      callback = console.log;
+      console.log("no callback function was defined, using console.log");
+   }
+
    /* Variables */
 
    var data = _data; // the source data
    var target = _target; // the id of the current target (div)
    var output = _data; // (filtered) data
+   var titles = _titles; // titles for specific data keys
    var dom;
    
    var clickHandlers = {};
@@ -85,8 +92,10 @@ eatables.table = function (_target, _data, sortable, callback) {
    };
 
    var row = function (target, elements, id) {
-      for(var p in elements) {
-         target.append("<td id=row_" + id + ">" + elements[p] + "</td>");
+      var td_value;
+      for(var p in titles) {
+         td_value = elements[p] || "-";
+         target.append("<td id=row_" + id + ">" + td_value + "</td>");
       }
 
       $("td#row_" + id, target).wrapAll("<tr id=row_" + id + "></tr>");
@@ -94,13 +103,15 @@ eatables.table = function (_target, _data, sortable, callback) {
 
    // you can also create a table without data
    var constructDom = function () {
-      dom = $("<div id=" + target + ">");
       var i;
+      dom = $("<div id=" + target + ">");
 
-      if(!output)
+      if(!output || !data)
          return;
 
-      row(dom, Object.keys(output[0]), "title");
+      titles = titles || Object.keys(data[0]);
+
+      row(dom, titles, "title");
       
       for(i = 0; i < output.length; i++) {
          row(dom, output[i], i);
