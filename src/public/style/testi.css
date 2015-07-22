@@ -32,17 +32,11 @@ div.ots2{
 
 
 table.links {
-	//margin-left: -180px;
-	//margin-top: 200px;
 	padding: 20px;
 	padding-left: 150px;
 	padding-right: 200px;
 	border-top-right-radius: 4em;
-	//width: 600px;
 	background-color: #4EC8D9;
-	//display: inline;
-	//float: left;
-	//table-layout: fixed;
 	
 }
 
@@ -65,8 +59,8 @@ table.links td {
 div.boxi {
 	background-color: #FCFCFC;
 	width: 875px;
-    	height: 600px;
-    	border: 1px dashed #2DADBF;
+    height: 600px;
+    border: 1px dashed #2DADBF;
 	padding: 20px;
 	padding-top: 20px;
 	float: left;
@@ -172,19 +166,61 @@ div.foodbox {
 }
 
 form {
-	font-family: Tahoma;
+	font-family: Arial;
+	text-transform: uppercase;
+	color: #2DADBF;
 	font-size: 14px;
+	font-weight: 900;
+	line-height: 190%;
+	width: 400px;
+	height: 450px;
+	padding-right: 20px;
+	border-right: dashed 1px #0C9DB1;
+}
+
+input {
+	display: block;
 }
 
 input[type="text"].typical {
+	font-family: Tahoma;
    padding: 5px;
-   border: solid 1px #dcdcdc;
+   border: solid 1px #2DADBF;
    transition: box-shadow 0.3s, border 0.3s;
 }
 
 input[type="text"].typical:focus {
-   border: solid 1px #707070;
-   box-shadow: 0 0 5px 1px #969696;
+	border: solid 1px white;
+	box-shadow: 0 0 5px 1px #0C9DB1;
+   
+}
+
+input[type="radio"].effort{
+	display:inline-block;
+}
+
+textarea.recipe {
+	font-family: Tahoma;
+	width: 390px;
+	height: 240px;
+	display:block;
+	border: solid 1px #2DADBF;
+	transition: box-shadow 0.3s, border 0.3s;
+}
+
+textarea.recipe:focus {
+	border: solid 1px white;
+	box-shadow: 0 0 5px 1px #0C9DB1;
+}
+
+button {
+    border-radius: 0.5em;
+font-family: Arial;
+	text-transform: uppercase;
+	font-size: 16px;
+	color: #FCFCFC;
+	background-color: #2DADBF;
+	font-weight: 900;
 }
 
 h3.alaotsikko {

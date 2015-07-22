@@ -35,17 +35,30 @@ Yay.
 
 <div class="boxi">
 
-<h1 class="otsikko">Insert Food</h1>
+<h1 class="otsikko">Add Food</h1>
 
 <p class="teksti">
-Use this form to insert a new food to the database.
+Use this form to add a new food to the database.
 </p>
 <br>
 <form onsubmit="validateAndInsert(); return false">
-   Name: <input type="text" class="typical" id="name">
-   Time: <input type="text" class="typical" id="time">
-   Effort: <input type="text" class="typical" id="effort">
-   Cost: <input type="text" class="typical" id="name">
+<div style="float:left; margin-right: 20px">
+   Name <input type="text" class="typical" id="name">
+   Time <input type="text" class="typical" id="time">
+   Cost <input type="text" class="typical" id="cost">
+   Recipe 
+</div>
+<div style="line-height: 190%">
+   Effort <input type="radio" name="effort" value="1" class="effort" checked>1
+    <input type="radio" name="effort" value="2" class="effort">2
+	<input type="radio" name="effort" value="3" class="effort">3<br><br>
+   Type <select>
+			<option value="main">Main</option>
+			<option value="dessert">Dessert</option>
+		</select><br><br>
+	<button type="button" style="float:right">Submit</button>
+</div>   
+   <textarea placeholder="Write the recipe here" name="recipe" class="recipe"></textarea>
 </form>
 
 
