@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: public/javascript/dbscript.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: public/javascript/dbscript.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/** Database functions for eatables 
+ * @author Joonas Laukka
+*/
+
+// TODO: AJAX instead of socket.io
+// or keep using it for practice
+
+/** 
+ * A constructor for a database object based on
+ * dbObjectSchema in the mongodb_handler package.
+ * @class dbObject
+ * @constructor
+ * 
+ * @param col {String} target collection in the DB
+ * @param val {Object} a value object
+ * @param dest {String} the response destination
+*/
+function dbObject(col, val, dest) {
+   this.destination = dest;
+   this.collection = col;
+   this.values = val;
+}
+
+/**
+ * A constructor for a database regular expression.
+ *
+ * For some reason the javascript RegExp object
+ * doesn't seem to survive the transmission to server.
+ * It'll be created on the server side.
+ * @class dbRegex
+ * @constructor
+ *
+ * @param expression {String} regular expression
+ * @param flags {String} regexp flags
+*/
+function dbRegex(expression, flags) {
+   this.$regex = [expression, flags || ""];
+}
+
+/** 
+ * A constructor for a database handler
+ * @class dbHandler
+ * @constructor
+ * 
+ * @param url {String} the url address for the database
+ * @param val {String|Number} the port of the database
+ * @param callback {Function} callback for error handling
+*/
+function dbHandler(url, port, callback) {
+   url = url + ':' + port;
+   try {
+      this.socket = io.connect(url);
+   } catch(err) {
+      callback(err);
+   }
+   
+   /**
+    * destCallbacks contains the query response callbacks
+    * @type {Object}
+   */
+   this.destCallbacks = {};
+
+   this.socket.on('connect_failed', function () {
+      callback("connection failed");
+   });
+}
+
+/**
+ * Define a function for handling a response.
+ * This is an obvious downside of using socket.io.
+ *
+ * @param dest {String} response destination identifier
+ * @param callback {Function} the destination function for the response 
+*/
+dbHandler.prototype.onResponse = function (dest, callback) {
+   console.log("adding a response callback for " + dest);
+   if(typeof callback === 'function')
+      this.destCallbacks[dest] = callback;   
+   else
+      console.log("the callback was not a function");
+};
+
+// TODO: move these back to the constructor
+/**
+ * This function defines the action to be taken on
+ * a socket response. The response destinations
+ * should be added first through onResponse.
+*/
+dbHandler.prototype.listen = function () {
+   this.socket.on('insert_response', function (data) {
+      if(data.ok !== 1) 
+         console.log("error on insert object");
+       
+      console.log("object { name: " + object.values.name + 
+            " } succesfully inserted");
+   });
+
+   var callbacks = this.destCallbacks;
+   this.socket.on('query_response', function (data) {
+      console.log("got a query response");
+      console.log(JSON.stringify(data, null, 4));
+      var destination = data.destination;
+
+      if(destination === undefined)
+         return;
+
+      if(callbacks[destination] === undefined) {
+         console.log("a lost query response registered:");
+         console.log(data);
+         return;
+      }
+
+      if(data.results.length === 0)
+         data.results.push({ error: "No result." });
+         
+      // do something
+      // NOTE: handle errors on the other side
+      callbacks[destination](data);
+   });
+};
+
+/** 
+ * Inserts a database object to the database.
+ * 
+ * @param object {dbObject} database object
+*/
+dbHandler.prototype.insertObject = function (object) {
+   this.rawRequest(object, 'insert');
+   console.log("insert request sent");
+};
+
+/** 
+ * Queries multiple database objects from the database.
+ * 
+ * @param object {dbObject} database object
+ * @param count {Number} the amount of results wanted (0 = all)
+*/
+dbHandler.prototype.queryObject = function (object, count) {
+   object.options = { limit: count, fields: { _id: 0 } };
+   this.rawRequest(object, 'query');
+};
+
+/**
+ * Constains the raw request functionalities. 
+ * Should not be used by itself.
+ *
+ * @param object {dbObject} database object
+ * @param type {String} the type of the query
+*/
+dbHandler.prototype.rawRequest = function (object, type) {
+   try {
+      this.socket.emit(type, object);
+   } catch(err) {
+      console.log("there was an error with a rawRequest type: " + type + ":");
+      console.log(err);
+   }
+};
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-mongodb_handler.html">mongodb_handler</a></li></ul><h3>Classes</h3><ul><li><a href="dbHandler.html">dbHandler</a></li><li><a href="dbObject.html">dbObject</a></li><li><a href="dbRegex.html">dbRegex</a></li><li><a href="eatables.appendableList.html">appendableList</a></li><li><a href="eatables.structure.html">structure</a></li><li><a href="eatables.table.html">table</a></li></ul><h3>Namespaces</h3><ul><li><a href="eatables.html">eatables</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.2</a> on Fri Jul 24 2015 02:47:58 GMT+0300 (EEST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
