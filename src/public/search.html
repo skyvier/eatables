@@ -1,58 +1,72 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script>
+$(function () {
+   $("#linkbar").load("./link_bar.html");
+   $("#infobar").load("./info_bar.html");
+});
+
+</script>
 <meta charset="UTF-8">
 <LINK href="./style/testi.css" rel="stylesheet" type="text/css">
 <title>Eatables</title>
 </head>
-
 <body>
 
-<div class="ots1">E</div>
+<div id="linkbar"></div>
 
-<div style="position:absolute; margin-left: 1000px; margin-top: 100px"><img src="./resources/pottu.png"></div>
-
-<div class="ots2" >AT<div style="color:#2DADBF; display: inline">ABLES</div></div>
-
-
-
-<table class="links">
-	<tr>
-		<td><a href="index.html">INDEX</a></td>
-		<td><a href="foods.html">FOODS</a></td>
-		<td><a href="ingre.html">INGREDIENTS</a></td>
-		<td><a href="search.html">SEARCH</a></td>
-	</tr>
-</table>
-
-<p class="copy">CopyrightMuchYes
-FoodsEvenMoreMuch YesYes.
-<br><br>
-Yay.
-<br>
-<img src="./resources/strawberry.png">
-</p>
+<div id="infobar"></div>
 
 <div class="boxi">
 
-<h1 class="otsikko">EatMuch.</h1>
+<h1 class="otsikko">Search</h1>
 
-<p class="teksti">
-testi testi testi testi testi testi testi testi testi testi testi testi 
-testi testi testi testi testi testi testi testi testi testi testi testi 
-testi testi testi testi testi testi testi testi testi testi testi testi 
-testi testi testi testi testi testi testi testi testi testi testi testi 
-testi testi testi testi testi testi testi testi testi testi testi testi </p>
+<div class="table_div">
 
+<p class="teksti">Use this form to search for foods and ingredients.</p>
+<form id="search_form"> 
+Name: <input type="text" class="typical" id="search" list="suggestions">
+<datalist id="suggestions">
 
-
-
+</datalist>
+<br>
+<input type="checkbox" id="food" value="Food" checked>Food<br>
+<input type="checkbox" id="ingredient" value="Ingredient" checked>Ingredient<br>
+</form>
 
 </div>
 
+<div class="foodbox">
+   <h2 class="otsikko">Makaroonilaatikko</h2>
+   <h3 class="alaotsikko" id="type">Type / 2</h3> 
+
+   <div class="table_div">
+      <table>
+      <tr>
+      <td class="info">Time</td>
+      <td id="time"></td>
+      </tr>
+      <tr>
+      <td class="info">Portions</td>
+      <td id="portions"></td>
+      </tr>
+      <tr>
+      <td class="info">Recipe</td>
+      <td id="recipe"></td>
+      </tr>
+      </table>
+   </div>
+</div>
+
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/javascript/dbscript.js"></script>
+<script src="/javascript/eatables/structure.js"></script>
+<script src="/javascript/eatables/list.js"></script>
+<script src="/javascript/search.js"></script>
 
 
-
-
-</body>
 </html>

@@ -1,22 +1,22 @@
-/* 
- * Functionalities for expressing database 
- * data in the eatables web page.
-*/
+   /* 
+    * Functionalities for expressing database 
+    * data in the eatables web page.
+   */
 
-var eatables = eatables || {};
+   var eatables = eatables || {};
 
-/*
- * A html structure handler.
- * The object makes jquery operations simpler.
- *
- * @param _dom the target (jquery object or selector string)
-*/
-eatables.structure = function (_dom) {
-   var dom; 
-   
-   var construct = function () {
-      if(typeof _dom !== 'object')
-         dom = $(_dom) || null;
+   /*
+    * A html structure handler.
+    * The object makes jquery operations simpler.
+    *
+    * @param _dom the target (jquery object or selector string)
+   */
+   eatables.structure = function (_dom) {
+      var dom; 
+      
+      var construct = function () {
+         if(typeof _dom !== 'object')
+            dom = $(_dom) || null;
       else
          dom = _dom; 
 

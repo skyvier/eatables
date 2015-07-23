@@ -33,6 +33,7 @@ function dbRegex(expression, flags) {
  * 
  * @param url the url address for the database
  * @param val the port of the database
+ * @param callback callback for error handling
 */
 function dbHandler(url, port, callback) {
    url = url + ':' + port;
