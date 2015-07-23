@@ -18,7 +18,7 @@ $(function () {
       var alaotsikko = data.type + " / " + data.effort;
       foodInfo.change("h2.otsikko", "text", data.name);
       foodInfo.change("h3.alaotsikko", "text", alaotsikko);
-      foodInfo.change("td#time", "text", data.time || "-"),
+      foodInfo.change("td#time", "text", data.time || "-");
       foodInfo.change("td#portions", "text", data.portions || "-");
       foodInfo.change("td#recipe", "text", data.recipe || "-");
    });
