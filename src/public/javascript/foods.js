@@ -16,8 +16,6 @@ $(function () {
       }
    });
 
-   var currentType = "Main";
-
    /* Food information functionalities */
    
    var foodInfo = new eatables.structure($("div.foodbox"));
@@ -68,19 +66,19 @@ $(function () {
    /*
     * Site element functionalities
    */
-   
-   $("#main").click(function () {
-      console.log("main type request");
-      currentType = "Main";
-      var obj = new dbObject('foods', { type: "Main" }, 'type_request');
+
+   function typeSearch(_type) {
+      $('h2#type_title').text(_type);
+      var obj = new dbObject('foods', { type: _type }, 'type_request');
       dataHandler.queryObject(obj, 0);
+   }
+
+   $("#main").click(function () {
+      typeSearch("Main");
    });
 
    $("#dessert").click(function () {
-      console.log("dessert type request");
-      currentType = "Dessert";
-      var obj = new dbObject('foods', { type: "Dessert" }, 'type_request');
-      dataHandler.queryObject(obj, 0);
+      typeSearch("Dessert");
    });
 
    $("#search_foods").keyup(function () {

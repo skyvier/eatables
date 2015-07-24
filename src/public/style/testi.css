@@ -159,6 +159,7 @@ div.table_div td {
 
 div.foodbox {
 	border-left:1px dashed #2DADBF;
+	border-top:1px solid #2DADBF;
 	width:450px;
 	height: 400px;
 	padding-left: 10px;

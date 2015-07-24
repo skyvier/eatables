@@ -1,13 +1,20 @@
 $(function () {
+   /* dbHandler defined by dbscript.js */
    var dataHandler = new dbHandler('192.168.1.42', 1337, console.log);
+
+   /* An appendable <datalist> handler */
    var dataList = new eatables.appendableList($("#suggestions"), "option");
+
+   /* A html structure where the values change */
    var foodInfo = new eatables.structure($("div.foodbox"));
 
+   /* Respond to search_query response from the server */
    dataHandler.onResponse('search_query', function (data) {
       console.log("got response");
       dataList.updateData(data.results, "name");  
    });
 
+   /* Respond to search_result response from the server */
    dataHandler.onResponse('search_result', function (data) {
       if(data.results.length === 0)
          return;
@@ -23,6 +30,7 @@ $(function () {
       foodInfo.change("td#recipe", "text", data.recipe || "-");
    });
 
+   /* Initialize dbHandler with the previous responses */
    dataHandler.listen();
 
    function submitForm() {
