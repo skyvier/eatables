@@ -81,6 +81,10 @@ $(function () {
       typeSearch("Dessert");
    });
 
+   $("#add").click(function () {
+      window.location.replace("/new_food.html");
+   });
+
    $("#search_foods").keyup(function () {
       resultTable.filterData("name", new RegExp("^" + $(this).val(), "i"));
    });

@@ -153,8 +153,13 @@ div.table_div tr:nth-child(even) {
 }
 
 div.table_div td {
-	
 	color: #474747;
+   max-height: 5px;
+   transition: max-height 2s;
+}
+
+div.table_div td:hover {
+   max-height: none;
 }
 
 div.foodbox {

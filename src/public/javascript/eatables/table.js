@@ -122,14 +122,20 @@ eatables.table = function (_target, _data, _titles, sortable, callback) {
       }
    };
 
-   var row = function (target, elements, id) {
+   var row = function (elements, id) {
       var td_value;
+
       for(var p in titles) {
-         td_value = elements[p] || "-";
-         target.append("<td id=row_" + id + ">" + td_value + "</td>");
+         if($.isArray(titles)) {
+            td_value = elements[titles[p]] || "-";   
+         } else {
+            td_value = elements[p] || "-";
+         }
+
+         dom.append("<td id=row_" + id + ">" + td_value + "</td>");
       }
 
-      $("td#row_" + id, target).wrapAll("<tr id=row_" + id + "></tr>");
+      $("td#row_" + id, dom).wrapAll("<tr id=row_" + id + "></tr>");
    };
 
    // you can also create a table without data
@@ -142,10 +148,16 @@ eatables.table = function (_target, _data, _titles, sortable, callback) {
 
       titles = titles || Object.keys(data[0]);
 
-      row(dom, titles, "title");
-      
+      /* Creates the title row */
+      for(var p in titles) {
+         dom.append("<th id=row_title>" + titles[p] + "</th>");
+      }
+
+      $("th#row_title", dom).wrapAll("<tr id=row_title></tr>");
+     
+      /* Creates the data rows */ 
       for(i = 0; i < output.length; i++) {
-         row(dom, output[i], i);
+         row(output[i], i);
       }
 
       $("tr", dom).wrapAll("<table></table>");

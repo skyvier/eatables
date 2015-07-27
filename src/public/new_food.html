@@ -1,37 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script>
+$(function () {
+   $("#linkbar").load("./link_bar.html");
+   $("#infobar").load("./info_bar.html");
+});
+</script>
 <meta charset="UTF-8">
 <LINK href="./style/testi.css" rel="stylesheet" type="text/css">
 <title>Eatables</title>
 </head>
-
 <body>
 
-<div class="ots1">E</div>
+<div id="linkbar"></div>
 
-<div style="position:absolute; margin-left: 1000px; margin-top: 100px"><img src="./resources/pottu.png"></div>
-
-<div class="ots2" >AT<div style="color:#2DADBF; display: inline">ABLES</div></div>
-
-
-
-<table class="links">
-	<tr>
-		<td><a href="index.html">INDEX</a></td>
-		<td><a href="foods.html">FOODS</a></td>
-		<td><a href="ingre.html">INGREDIENTS</a></td>
-		<td><a href="search.html">SEARCH</a></td>
-	</tr>
-</table>
-
-<p class="copy">CopyrightMuchYes
-FoodsEvenMoreMuch YesYes.
-<br><br>
-Yay.
-<br>
-<img src="./resources/strawberry.png">
-</p>
+<div id="infobar"></div>
 
 <div class="boxi">
 
@@ -42,7 +27,9 @@ Use this form to add a new food to the database.
 </p>
 <br>
 
-<form class="new_food" onsubmit="validateAndInsert(); return false">
+<div style="float:left">
+
+<form id="add_food" class="new_food">
 <div style="float:left; margin-right: 10px">
    Name <input type="text" class="typical" id="name">
    Time <input type="text" class="typical" id="time">
@@ -50,7 +37,7 @@ Use this form to add a new food to the database.
    Recipe 
 </div>
 <div style="float:right">
-Type <br><select>
+Type <br><select id="type">
 			<option value="main">Main</option>
 			<option value="dessert">Dessert</option>
 		</select><br>
@@ -59,18 +46,28 @@ Type <br><select>
     <input type="radio" name="effort" value="2" class="effort">2
 	<input type="radio" name="effort" value="3" class="effort">3</div>
    <br>
-	<button type="button" style="float:right">Submit</button>
+	<button type="submit" style="float:right">Submit</button>
 </div>
 	<div style="float:left">
    <textarea placeholder="Write the recipe here" name="recipe" class="recipe"></textarea>
    </div>
 </form>
 
+</div>
+
+<div class="table_div" style="float:right">
+<div id="ingredients">
+</div>
+</div>
 
 </div>
 
-<script>
-
-</script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/javascript/sortElements/jquery.sortElements.js"></script>
+<script src="/javascript/dbscript.js"></script>
+<script src="/javascript/eatables/table.js"></script>
+<script src="/javascript/eatables/structure.js"></script>
+<script src="/javascript/eatables/list.js"></script>
+<script src="/javascript/new_food.js"></script>
 </body>
 </html>
