@@ -41,21 +41,24 @@ Yay.
 Use this form to add a new food to the database.
 </p>
 <br>
-<form onsubmit="validateAndInsert(); return false">
-<div style="float:left; margin-right: 20px">
+
+<form class="new_food" onsubmit="validateAndInsert(); return false">
+<div style="float:left; margin-right: 10px">
    Name <input type="text" class="typical" id="name">
    Time <input type="text" class="typical" id="time">
-   Cost <input type="text" class="typical" id="cost">
+   Portions <input type="text" class="typical" id="portions">
    Recipe 
 </div>
-<div style="line-height: 190%">
-   Effort <input type="radio" name="effort" value="1" class="effort" checked>1
-    <input type="radio" name="effort" value="2" class="effort">2
-	<input type="radio" name="effort" value="3" class="effort">3<br><br>
-   Type <select>
+<div style="float:right">
+Type <br><select>
 			<option value="main">Main</option>
 			<option value="dessert">Dessert</option>
-		</select><br><br>
+		</select><br>
+   Effort 
+   <div style="font-size: 15px; text-shadow"><input type="radio" name="effort" value="1" class="effort" checked>1
+    <input type="radio" name="effort" value="2" class="effort">2
+	<input type="radio" name="effort" value="3" class="effort">3</div>
+   <br>
 	<button type="button" style="float:right">Submit</button>
 </div>   
    <textarea placeholder="Write the recipe here" name="recipe" class="recipe"></textarea>

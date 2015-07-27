@@ -166,7 +166,7 @@ div.foodbox {
 	float:right;
 }
 
-form {
+form.new_food {
 	font-family: Arial;
 	text-transform: uppercase;
 	color: #2DADBF;
@@ -185,6 +185,7 @@ input {
 
 input[type="text"].typical {
 	font-family: Tahoma;
+	color: #474747;
    padding: 5px;
    border: solid 1px #2DADBF;
    transition: box-shadow 0.3s, border 0.3s;
@@ -198,9 +199,15 @@ input[type="text"].typical:focus {
 
 input[type="radio"].effort{
 	display:inline-block;
+	width: 20px;
+	height: 20px;
+	cursor:pointer;
+	-webkit-appearance: checkbox;
+    -moz-appearance: checkbox;   
 }
 
 textarea.recipe {
+	color: #474747;
 	font-family: Tahoma;
 	width: 390px;
 	height: 240px;
@@ -216,12 +223,20 @@ textarea.recipe:focus {
 
 button {
     border-radius: 0.5em;
-font-family: Arial;
+	font-family: Arial;
 	text-transform: uppercase;
 	font-size: 16px;
 	color: #FCFCFC;
 	background-color: #2DADBF;
 	font-weight: 900;
+}
+
+select {
+	font-family: Tahoma;
+	width: 170px;
+	height: 25px;
+	border: solid 1px #2DADBF;
+	color: #474747;
 }
 
 h3.alaotsikko {
