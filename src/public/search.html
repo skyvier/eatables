@@ -23,17 +23,20 @@ $(function () {
 
 <h1 class="otsikko">Search</h1>
 
+<p class="teksti">Use this form to search for foods and ingredients.</p>
+
 <div class="table_div">
 
-<p class="teksti">Use this form to search for foods and ingredients.</p>
-<form id="search_form"> 
-Name: <input type="text" class="typical" id="search" list="suggestions">
+
+<br>
+<form class="search" id="search_form"> 
+Name <input type="text" class="typical" id="search" list="suggestions">
 <datalist id="suggestions">
 
 </datalist>
 <br>
-<input type="checkbox" id="food" value="Food" checked>Food<br>
-<input type="checkbox" id="ingredient" value="Ingredient" checked>Ingredient<br>
+<input type="checkbox" id="food" value="Food" class="search" checked>Food<br>
+<input type="checkbox" id="ingredient" value="Ingredient" class="search">Ingredient<br>
 </form>
 
 </div>

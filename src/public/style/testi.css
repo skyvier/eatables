@@ -117,7 +117,7 @@ div.table_div {
 	height:400px;
 	overflow:auto;
 	border-top:1px solid #2DADBF;
-	border-bottom:1px solid #2DADBF;
+	//border-bottom:1px solid #2DADBF;
 	float:left;
 }
 
@@ -179,6 +179,15 @@ form.new_food {
 	border-right: dashed 1px #0C9DB1;
 }
 
+form.search {
+	font-family: Arial;
+	text-transform: uppercase;
+	color: #2DADBF;
+	font-size: 14px;
+	font-weight: 900;
+	line-height: 190%;
+}
+
 input {
 	display: block;
 }
@@ -186,9 +195,10 @@ input {
 input[type="text"].typical {
 	font-family: Tahoma;
 	color: #474747;
-   padding: 5px;
-   border: solid 1px #2DADBF;
-   transition: box-shadow 0.3s, border 0.3s;
+	padding: 5px;
+	margin-left: 3px;
+	border: solid 1px #2DADBF;
+	transition: box-shadow 0.3s, border 0.3s;
 }
 
 input[type="text"].typical:focus {
@@ -204,6 +214,13 @@ input[type="radio"].effort{
 	cursor:pointer;
 	-webkit-appearance: checkbox;
     -moz-appearance: checkbox;   
+}
+
+input[type="checkbox"].search{
+	display:inline-block;
+	width: 20px;
+	height: 20px;
+	cursor:pointer;
 }
 
 textarea.recipe {
@@ -242,15 +259,17 @@ select {
 h3.alaotsikko {
 	font-family: Impact;
 	font-size: 15px;
-   font-style: italic;
+	font-style: italic;
 	color: #0C9DB1;
 	text-align: center;
 	font-weight: 100;
 }
 
 div.table_div td.info {
-	color: #0C9DB1;
-	font-family: Impact;
-   font-weight: bold;
+	font-family: Arial;
+	text-transform: uppercase;
+	color: #2DADBF;
+	font-size: 14px;
+	font-weight: 900;
 }
 
