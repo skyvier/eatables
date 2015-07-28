@@ -31,6 +31,11 @@ if(typeof eatables.structure !== 'undefined') {
        * @param value {String|Number} value to be inserted 
       */
       this.appendValue = function(value) {
+         if(element === 'li') {
+            this.structure.$().append("<li>" + value + "</li>");
+            return;
+         }
+
          this.structure.$().append("<" + element + " value=\"" + value + "\">");
       };
 
@@ -38,14 +43,23 @@ if(typeof eatables.structure !== 'undefined') {
        * Function updates the new values to the list.
        *
        * @param dataObjects {Object[]} an array of data objects
-       * @param key {String} the object property to be appended in the list
+       * @param keys {String[]} the object property to be appended in the list
       */
-      this.updateData = function (dataObjects, key) {
-         var i;
+      this.updateData = function (dataObjects, keys) {
+         var i, a, output;
+
+         if(!$.isArray(keys))
+            keys = [keys];
+
          $(element, this.structure.$()).remove();
 
          for(i = 0; i < dataObjects.length; i++) {
-            this.appendValue(dataObjects[i][key]);
+            output = "";
+            for(a = 0; a < keys.length; a++) {
+               output += dataObjects[i][keys[a]] + " ";
+            }
+
+            this.appendValue(output);
          }
       };
    };
