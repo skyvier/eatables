@@ -44,9 +44,13 @@ if(typeof eatables.structure !== 'undefined') {
        *
        * @param dataObjects {Object[]} an array of data objects
        * @param keys {String[]} the object property to be appended in the list
+       * @param separator {String} a string separating the object properties
       */
-      this.updateData = function (dataObjects, keys) {
+      this.updateData = function (dataObjects, keys, separator) {
          var i, a, output;
+
+         if(separator === undefined)
+            separator = "";
 
          if(!$.isArray(keys))
             keys = [keys];
@@ -56,7 +60,7 @@ if(typeof eatables.structure !== 'undefined') {
          for(i = 0; i < dataObjects.length; i++) {
             output = "";
             for(a = 0; a < keys.length; a++) {
-               output += dataObjects[i][keys[a]] + " ";
+               output += dataObjects[i][keys[a]] + separator;
             }
 
             this.appendValue(output);

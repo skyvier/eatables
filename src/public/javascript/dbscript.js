@@ -90,9 +90,9 @@ dbHandler.prototype.listen = function () {
    this.socket.on('insert_response', function (data) {
       if(data.ok !== 1) 
          console.log("error on insert object");
-       
-      console.log("object { name: " + object.values.name + 
-            " } succesfully inserted");
+
+      if(callbacks['insert_response'] !== undefined)
+         callbacks['insert_response'](data);
    });
 
    var callbacks = this.destCallbacks;
@@ -136,7 +136,7 @@ dbHandler.prototype.insertObject = function (object) {
  * @param count {Number} the amount of results wanted (0 = all)
 */
 dbHandler.prototype.queryObject = function (object, count) {
-   object.options = { limit: count, fields: { _id: 0 } };
+   object.options = { limit: count };
    this.rawRequest(object, 'query');
 };
 

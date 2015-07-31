@@ -16,8 +16,11 @@ $(function () {
 
    /* Respond to search_result response from the server */
    dataHandler.onResponse('search_result', function (data) {
+      console.log("got a search_result");
       if(data.results.length === 0)
          return;
+
+      console.log("putting the data");
 
       data = data.results[0];
 
