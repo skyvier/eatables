@@ -19,6 +19,15 @@ $(function () {
    /* Food information functionalities */
    
    var foodInfo = new eatables.structure($("div.foodbox"));
+   
+   function updateInfo(data) {
+      var alaotsikko = data.type + " / " + data.effort;
+      foodInfo.change("h2.otsikko", "text", data.name);
+      foodInfo.change("h3.alaotsikko", "text", alaotsikko);
+      foodInfo.change("td#time", "text", data.time || "-");
+      foodInfo.change("td#portions", "text", data.portions || "-");
+      foodInfo.change("td#recipe", "text", data.recipe || "-");
+   }
 
    /* Table functionalities */
 
@@ -45,17 +54,14 @@ $(function () {
 
             if(resultTable) 
                resultTable.changeData(data.results); 
+
+            updateInfo(data.results[0]);
       });
    });
 
    resultTable.onClick("tr", function (data) {
       console.log("got data");
-      var alaotsikko = data.type + " / " + data.effort;
-      foodInfo.change("h2.otsikko", "text", data.name);
-      foodInfo.change("h3.alaotsikko", "text", alaotsikko);
-      foodInfo.change("td#time", "text", data.time || "-");
-      foodInfo.change("td#portions", "text", data.portions || "-");
-      foodInfo.change("td#recipe", "text", data.recipe || "-");
+      updateInfo(data);
    });
 
    /* dbHandler functionalities */

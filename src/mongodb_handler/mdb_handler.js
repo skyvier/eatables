@@ -10,6 +10,8 @@ var MongoClient = require('mongodb').MongoClient;
 var Server = require('mongodb').Server;
 var Validator = require('jsonschema').Validator;
 
+var Async = require('async');
+
 /* A JSON schema for the database configuration file */
 var configSchema = {
    "id": "/Config",
@@ -176,15 +178,35 @@ function queryOperation(object, collection, options, callback) {
          return callback(err);
       }
 
-      var output = {};
-      output.results = doc;
+      callback(null, doc);
+   });
+}
 
-      if(object.destination === undefined)
-         output.destination = 'unknown';
-      else
-         output.destination = object.destination;
+function globalQueryOperation(objects, count, options, output) {
+   var i, tasks = [];
 
-      callback(null, output);
+   objects.forEach(function (obj) {
+      tasks.push(function (callback) {
+         dbOperation(queryOperation, options, obj, callback);
+      });
+   });
+
+   Async.parallel(tasks, function (err, docs) {
+      var i, base = docs[0];
+
+      if(err)
+         output(err);
+
+      /* concat inner arrays to base */
+      for(i = 1; i < docs.length; i++) {
+         base.concat(docs[i]);
+      }
+      docs = base;
+         
+      if(typeof count === 'number')
+         docs = docs.slice(0, count);
+
+      output(null, docs);   
    });
 }
 
@@ -225,6 +247,20 @@ exports.init = function () {
 
    console.log("the mongodb server " + mongoUrl + " is operational");
    return true;
+};
+
+
+/**
+ * @function queryGlobal
+ *
+ * Database query operation which searches through multiple collections.
+ *
+ * @param objects {Object[]} the database objects to be used
+ * @param count {Number} the amount of docs returned
+ * @param output {Function} callback function (err, doc)
+*/
+exports.queryGlobal = function (objects, count, callback) {
+   globalQueryOperation(objects, count, {}, callback);
 };
 
 /**

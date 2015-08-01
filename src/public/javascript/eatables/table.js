@@ -87,7 +87,7 @@ eatables.table = function (_target, _data, _titles, sortable, callback) {
    var makeSortable = function () {
       var table = $("table", dom);
 
-      $("td#row_title", table).each(function () {
+      $("th#row_title", table).each(function () {
          var index = $(this, table).index();
          var inverse = false;
          

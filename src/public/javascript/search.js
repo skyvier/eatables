@@ -37,13 +37,22 @@ $(function () {
    dataHandler.listen();
 
    function submitForm() {
-      console.log("submitted!");
       var sVal = $("#search").val();
-      var foodsObj = new dbObject('foods', { name: sVal }, 
-                             'search_result');
+      var foodsObj = null, ingreObj = null;
+
+      console.log("submitted!");
+
       if($("#food").is(':checked')) {
-         dataHandler.queryObject(foodsObj, 1);
+         foodsObj = new dbObject('foods', { name: sVal }, 
+            'search_result');
       }
+
+      if($("#ingredient").is(':checked')) {
+         ingreObj = new dbObject('ingredients', { name: sVal }, 
+            'search_result');
+      }
+
+      dataHandler.queryGlobal(ingreObj, foodsObj, 1);
 
       return false;
    }

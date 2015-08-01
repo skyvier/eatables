@@ -5,16 +5,21 @@ var express = require('express'),
    
 var db = require('./mongodb_handler');
 
+var devMode = process.argv[2] === '-dev';
+
+if(devMode)
+   console.log("development mode enabled\n");
+
+var dev = function (input) {
+   if(devMode)
+      console.log(input);
+};
+
 if(!db.init()) {
    console.log("db fail");
 } else {
    console.log("db success");
 }
-
-var dev = function (input) {
-   if(process.argv[2] === '-dev')
-      console.log(input);
-};
 
 server.listen(1337);
 
@@ -34,7 +39,6 @@ io.on('connection', function (socket) {
    var address = socket.handshake.address;
    console.log("\n### CONNECTION ###\nFROM: " + address);
 
-   /* This won't be needed in the future */
    socket.on('query', function (data) {
       dev("\n### QUERY REQUEST ###");
 
@@ -48,6 +52,32 @@ io.on('connection', function (socket) {
             dev(err);
             return;
          }
+
+         res = { results: res };
+         res.destination = data.destination || 'unknown';
+
+         dev("\n### RESPONSE ###");
+         dev(res);
+         socket.emit('query_response', res);
+      });
+   });
+
+   socket.on('inter_collection', function (data) {
+      dev("\n### INTER COLLECTION QUERY ###");
+
+      if(!data) {
+         dev("### EMPTY DATA PACKET ###");
+         return;
+      } 
+
+      db.queryGlobal(data.values, data.options.limit, function (err, res) {
+         if(err) {
+            dev(err);
+            return;
+         }
+
+         res = { results: res };
+         res.destination = data.destination; 
 
          dev("\n### RESPONSE ###");
          dev(res);

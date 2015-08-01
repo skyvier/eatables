@@ -91,8 +91,8 @@ dbHandler.prototype.listen = function () {
       if(data.ok !== 1) 
          console.log("error on insert object");
 
-      if(callbacks['insert_response'] !== undefined)
-         callbacks['insert_response'](data);
+      if(callbacks[insert_response] !== undefined)
+         callbacks[insert_response](data);
    });
 
    var callbacks = this.destCallbacks;
@@ -138,6 +138,46 @@ dbHandler.prototype.insertObject = function (object) {
 dbHandler.prototype.queryObject = function (object, count) {
    object.options = { limit: count };
    this.rawRequest(object, 'query');
+};
+
+/** 
+ * Queries multiple database objects from more than one collections.
+ * 
+ * @param objects {dbObject} database objects
+ * @param count {Number} the amount of results wanted (0 = all)
+ * @example queryObjects(obj1, obj2, obj3, 1);
+*/
+dbHandler.prototype.queryGlobal = function () {
+   var i, arg, count, values = {},
+      options, dest, prop, object;
+
+   /* Parse arguments */
+   for(i = 0; i < arguments.length; i++) {
+      arg = arguments[i]; 
+      if(typeof arg === 'object') {
+         if(!arg)
+            continue;
+
+         dest = arg.destination || "";
+         if(!values.hasOwnProperty(dest)) 
+            values[dest] = [];
+
+         values[dest].push(arg);
+      } else if(typeof arg === 'number') {
+         count = arg;
+      }
+   }
+
+   /* Add the count option */
+   count = count || 0;
+   options = { limit: count }; 
+
+   /* Send an inter collection request for every destination */
+   for(prop in values) {
+      object = new dbObject('', values[prop], prop);
+      object.options = options;
+      this.rawRequest(object, 'inter_collection'); 
+   }
 };
 
 /**
