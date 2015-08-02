@@ -194,7 +194,7 @@ Returns false if the config file isn't appropriate.<span class="signature">()</s
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="mongodb_handler_mdb_handler.js.html">mongodb_handler/mdb_handler.js</a>, <a href="mongodb_handler_mdb_handler.js.html#line193">line 193</a>
+        <a href="mongodb_handler_mdb_handler.js.html">mongodb_handler/mdb_handler.js</a>, <a href="mongodb_handler_mdb_handler.js.html#line215">line 215</a>
     </li></ul></dd>
     
 
@@ -275,7 +275,7 @@ and uses the parameters to connect to the database.<span class="signature">()</s
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="mongodb_handler_mdb_handler.js.html">mongodb_handler/mdb_handler.js</a>, <a href="mongodb_handler_mdb_handler.js.html#line202">line 202</a>
+        <a href="mongodb_handler_mdb_handler.js.html">mongodb_handler/mdb_handler.js</a>, <a href="mongodb_handler_mdb_handler.js.html#line224">line 224</a>
     </li></ul></dd>
     
 
@@ -449,7 +449,7 @@ Database insert operation.<span class="signature">(object, callback)</span><span
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="mongodb_handler_mdb_handler.js.html">mongodb_handler/mdb_handler.js</a>, <a href="mongodb_handler_mdb_handler.js.html#line230">line 230</a>
+        <a href="mongodb_handler_mdb_handler.js.html">mongodb_handler/mdb_handler.js</a>, <a href="mongodb_handler_mdb_handler.js.html#line266">line 266</a>
     </li></ul></dd>
     
 
@@ -624,7 +624,182 @@ Database find() operation.<span class="signature">(options, object, callback)</s
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="mongodb_handler_mdb_handler.js.html">mongodb_handler/mdb_handler.js</a>, <a href="mongodb_handler_mdb_handler.js.html#line250">line 250</a>
+        <a href="mongodb_handler_mdb_handler.js.html">mongodb_handler/mdb_handler.js</a>, <a href="mongodb_handler_mdb_handler.js.html#line286">line 286</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="~queryGlobalDatabasequeryoperationwhichsearchesthroughmultiplecollections."><span class="type-signature">(inner) </span>queryGlobal
+
+Database query operation which searches through multiple collections.<span class="signature">(objects, count, output)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>objects</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;Object></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the database objects to be used</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>count</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the amount of docs returned</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>output</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">callback function (err, doc)</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="mongodb_handler_mdb_handler.js.html">mongodb_handler/mdb_handler.js</a>, <a href="mongodb_handler_mdb_handler.js.html#line253">line 253</a>
     </li></ul></dd>
     
 
@@ -776,7 +951,7 @@ Database findOne operation.<span class="signature">(object, callback)</span><spa
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="mongodb_handler_mdb_handler.js.html">mongodb_handler/mdb_handler.js</a>, <a href="mongodb_handler_mdb_handler.js.html#line240">line 240</a>
+        <a href="mongodb_handler_mdb_handler.js.html">mongodb_handler/mdb_handler.js</a>, <a href="mongodb_handler_mdb_handler.js.html#line276">line 276</a>
     </li></ul></dd>
     
 
@@ -818,13 +993,13 @@ Database findOne operation.<span class="signature">(object, callback)</span><spa
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-mongodb_handler.html">mongodb_handler</a></li></ul><h3>Classes</h3><ul><li><a href="dbHandler.html">dbHandler</a></li><li><a href="dbObject.html">dbObject</a></li><li><a href="dbRegex.html">dbRegex</a></li><li><a href="eatables.appendableList.html">appendableList</a></li><li><a href="eatables.structure.html">structure</a></li><li><a href="eatables.table.html">table</a></li></ul><h3>Namespaces</h3><ul><li><a href="eatables.html">eatables</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-mongodb_handler.html">mongodb_handler</a></li></ul><h3>Classes</h3><ul><li><a href="dbHandler.html">dbHandler</a></li><li><a href="dbObject.html">dbObject</a></li><li><a href="dbRegex.html">dbRegex</a></li><li><a href="eatables.appendableList.html">appendableList</a></li><li><a href="eatables.structure.html">structure</a></li><li><a href="eatables.table.html">table</a></li><li><a href="eatables.uniqueArray.html">uniqueArray</a></li></ul><h3>Namespaces</h3><ul><li><a href="eatables.html">eatables</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.2</a> on Fri Jul 24 2015 02:47:58 GMT+0300 (EEST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.2</a> on Sun Aug 02 2015 02:53:55 GMT+0300 (EEST)
 </footer>
 
 <script> prettyPrint(); </script>
