@@ -178,6 +178,10 @@ eatables.table = function (_target, _data, _titles, sortable, callback) {
    };
 
    var setData = function (_data) {
+      _data = _data || null;
+      if(!$.isArray(_data))
+         _data = [_data];
+
       data = _data;
       output = data;
    };

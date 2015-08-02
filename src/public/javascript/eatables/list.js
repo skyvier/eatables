@@ -20,7 +20,7 @@ if(typeof eatables.structure !== 'undefined') {
    */
    eatables.appendableList = function (target, element) {
       /** 
-       * eatables.structure allows more simple jquery operations
+       * eatables.structure allows simpler jquery operations
        * @type {Object}
       */
       this.structure = new eatables.structure(target);   

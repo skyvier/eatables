@@ -8,6 +8,7 @@
 
 var MongoClient = require('mongodb').MongoClient;
 var Server = require('mongodb').Server;
+var ObjectID = require('mongodb').ObjectID;
 var Validator = require('jsonschema').Validator;
 
 var Async = require('async');
@@ -121,42 +122,96 @@ function detectRegex(object) {
    }
 }
 
+function accessDatabase(callback) {
+   MongoClient.connect(mongoUrl, callback);
+}
+
+function accessCollection(collection, callback) {
+   accessDatabase(function (err, db) {
+      if(err) {
+         errorMessage("mongoclient.connect", err);
+         return callback(err);
+      }
+
+      db.collection(collection, function (err, col) {
+         callback(err, col, db);
+      });
+   });
+}
+
+function getCollectionName(id, output) {
+   var queryObj = { values: { _id: new ObjectID(id) } },
+      result;
+
+   if(typeof id === 'undefined' || !id) {
+      output("id undefined");
+   }
+
+   accessDatabase(function (err, db) {
+      if(err) {
+         db.close();
+         errorMessage("mongoclient.connect", err);
+         return output(err);
+      }
+
+      db.collections(function (err, cols) {
+         if(err) {
+            db.close();
+            errorMessage("db.collections", err);
+            return output(err);
+         }
+
+         // TODO: doesnt seem to work (server output logs)
+         Async.detect(cols, function (col, callback) {
+            queryOperation(queryObj, col, { limit: 1 }, function (err, doc) {
+               if(err) {
+                  return callback(false);
+               }
+
+               result = doc.length > 0;
+              
+               console.log("Checking " + col.collectionName + " ... " + result); 
+               callback(result);
+            });
+         }, function (result) {
+            if(typeof result === 'undefined') {
+               db.close();
+               return output(null, null);
+            }
+               
+            output(null, result.collectionName);   
+         });
+      });
+   });
+}
+
 function dbOperation(operation, options, object, callback) {
    if(!checkValidity(object, dbObjectSchema))
       callback("validity error");
 
-   MongoClient.connect(mongoUrl, function (err, db) {
+   accessCollection(object.collection, function (err, col, db) {
       if(err) {
-         errorMessage("mongoclient.connect", err);
-         return callback(err, null);
+         errorMessage("database collection", err);
+         db.close();
+         return callback(err);
       }
 
-      db.collection(object.collection, function (err, col) {
+      detectRegex(object.values);
+
+      var opName = operation.name;
+      console.log("\n### " + opName + " ###");
+      console.log("doing an " + opName + ": db." + object.collection +
+                  "." + opName + "(" + JSON.stringify(object.values, null, 4) + ")");
+      console.log(options);
+      
+      operation(object, col, options, function (err, doc) {
          if(err) {
-            errorMessage("database collection", err);
             db.close();
-            return callback(err);
+            return callback(err); 
          }
 
-         detectRegex(object.values);
-
-         var opName = operation.name;
-         console.log("\n### " + opName + " ###");
-         console.log("doing an " + opName + ": db." + object.collection +
-                     "." + opName + "(" + JSON.stringify(object.values, null, 4) + ")");
-         console.log(options);
-         
-         operation(object, col, options, function (err, doc) {
-            if(err) {
-               db.close();
-               return callback(err); 
-            }
-
-            db.close();
-            callback(null, doc);
-         });
+         callback(null, doc);
       });
-
    });
 }
 
@@ -183,7 +238,7 @@ function queryOperation(object, collection, options, callback) {
 }
 
 function globalQueryOperation(objects, count, options, output) {
-   var i, tasks = [];
+   var i, base, tasks = [];
 
    objects.forEach(function (obj) {
       tasks.push(function (callback) {
@@ -192,10 +247,13 @@ function globalQueryOperation(objects, count, options, output) {
    });
 
    Async.parallel(tasks, function (err, docs) {
-      var i, base = docs[0];
+      base = docs[0];
 
       if(err)
-         output(err);
+         return output(err);
+
+      if(!docs || docs.length === 0)
+         return output("no result");
 
       /* concat inner arrays to base */
       for(i = 1; i < docs.length; i++) {
@@ -206,7 +264,23 @@ function globalQueryOperation(objects, count, options, output) {
       if(typeof count === 'number')
          docs = docs.slice(0, count);
 
-      output(null, docs);   
+      /* Attach the source collection to the results */
+      Async.each(docs, function (doc, callback) {
+         getCollectionName(new ObjectID(doc._id), function (err, colName) {
+            if(err) {
+               return callback(err);
+            }
+
+            doc.collection = colName || 'none';
+            callback(null);
+         });
+      }, function (err) {
+         if(err) {
+            return output(err);
+         }
+
+         output(null, docs);
+      });
    });
 }
 

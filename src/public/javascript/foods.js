@@ -54,7 +54,8 @@ $(function () {
 
             if(resultTable) 
                resultTable.changeData(data.results); 
-
+            
+            /* Display the information of the first result */
             updateInfo(data.results[0]);
       });
    });

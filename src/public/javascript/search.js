@@ -8,6 +8,22 @@ $(function () {
    /* A html structure where the values change */
    var foodInfo = new eatables.structure($("div.foodbox"));
 
+   /* Table titles */
+   var ingreTitles = {
+      name: "Name",
+      manufacturer: "Maker",
+      type: "Type",
+      amount: "Amount",
+      price: "Price"
+   };
+
+   /* Ingredient table */
+   var ingreTable = new eatables.table("ingredients", null, 
+      ingreTitles, true, function (err) {
+         if(err)
+            console.log(err);
+      });
+
    /* Respond to search_query response from the server */
    dataHandler.onResponse('search_query', function (data) {
       console.log("got response");
@@ -24,18 +40,24 @@ $(function () {
 
       data = data.results[0];
 
-      console.log("got data");
-      var alaotsikko = data.type + " / " + data.effort;
-      foodInfo.change("h2.otsikko", "text", data.name);
-      foodInfo.change("h3.alaotsikko", "text", alaotsikko);
-      foodInfo.change("td#time", "text", data.time || "-");
-      foodInfo.change("td#portions", "text", data.portions || "-");
-      foodInfo.change("td#recipe", "text", data.recipe || "-");
+      if(data.collection === 'foods') {
+         var alaotsikko = data.type + " / " + data.effort;
+         foodInfo.change("h2.otsikko", "text", data.name);
+         foodInfo.change("h3.alaotsikko", "text", alaotsikko);
+         foodInfo.change("td#time", "text", data.time || "-");
+         foodInfo.change("td#portions", "text", data.portions || "-");
+         foodInfo.change("td#recipe", "text", data.recipe || "-");
+
+         ingreTable.changeData(data.ingredients);
+      } else if(data.collection === 'ingredients') {
+         ingreTable.changeData(data); 
+      }
    });
 
    /* Initialize dbHandler with the previous responses */
    dataHandler.listen();
 
+   /* Search form submit function, queries data */
    function submitForm() {
       var sVal = $("#search").val();
       var foodsObj = null, ingreObj = null;
@@ -57,6 +79,7 @@ $(function () {
       return false;
    }
 
+   /* Runs whenever the input field changes (updates options) */
    $("#search").on('input', function () {
       var sVal = $(this).val();
 

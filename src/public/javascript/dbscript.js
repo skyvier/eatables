@@ -136,7 +136,7 @@ dbHandler.prototype.insertObject = function (object) {
  * @param count {Number} the amount of results wanted (0 = all)
 */
 dbHandler.prototype.queryObject = function (object, count) {
-   object.options = { limit: count };
+   object.options = { limit: count || 0 };
    this.rawRequest(object, 'query');
 };
 
