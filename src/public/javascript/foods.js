@@ -53,7 +53,7 @@ $(function () {
             console.log("got response");
 
             if(resultTable) 
-               resultTable.changeData(data.results); 
+               resultTable.display(data.results); 
             
             /* Display the information of the first result */
             updateInfo(data.results[0]);
@@ -93,7 +93,7 @@ $(function () {
    });
 
    $("#search_foods").keyup(function () {
-      resultTable.filterData("name", new RegExp("^" + $(this).val(), "i"));
+      resultTable.filterTable("name", new RegExp("^" + $(this).val(), "i"));
    });
 
 });

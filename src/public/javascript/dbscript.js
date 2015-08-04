@@ -97,8 +97,6 @@ dbHandler.prototype.listen = function () {
 
    var callbacks = this.destCallbacks;
    this.socket.on('query_response', function (data) {
-      console.log("got a query response");
-      console.log(JSON.stringify(data, null, 4));
       var destination = data.destination;
 
       if(destination === undefined)

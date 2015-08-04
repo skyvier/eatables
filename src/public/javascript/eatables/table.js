@@ -7,11 +7,6 @@
 /** @namespace */
 var eatables = eatables || {};
 
-/* Data presentation functions */
-
-// TODO: clean this mess
-// JS and OOP ftw.
-
 /**
  * Creates a html table object that can be
  * moved, changed and sorted.
@@ -42,6 +37,8 @@ eatables.table = function (_target, _data, _titles, sortable, callback) {
    if(typeof callback !== 'function') {
       callback = console.log;
       console.log("no callback function was defined, using console.log");
+   } else {
+      callback(null);
    }
 
    /* Variables */
@@ -84,6 +81,8 @@ eatables.table = function (_target, _data, _titles, sortable, callback) {
 
    /* Private functions */
 
+   /* Adds onclick event handlers to the titles
+    * and makes the table rows sortable */
    var makeSortable = function () {
       var table = $("table", dom);
 
@@ -106,6 +105,8 @@ eatables.table = function (_target, _data, _titles, sortable, callback) {
       });
    };
 
+   /* Binds any predefined data functions to
+    * the row (td) click events. */
    var makeClickable = function () {
       var selector, 
           getHandler = function () {
@@ -123,7 +124,9 @@ eatables.table = function (_target, _data, _titles, sortable, callback) {
          $(selector, dom).click(getHandler);
       }
    };
-
+   
+   /* Append a html table row (td) representation
+    * of a data object to the table dom */
    var row = function (elements, id) {
       var td_value;
 
@@ -140,7 +143,9 @@ eatables.table = function (_target, _data, _titles, sortable, callback) {
       $("td#row_" + id, dom).wrapAll("<tr id=row_" + id + "></tr>");
    };
 
-   // you can also create a table without data
+   /* Builds the table html representation to the table dom. 
+    * Adds sort and click functionalities. 
+    * A null table can be built. */
    var buildTable = function () {
       var i;
 
@@ -179,15 +184,19 @@ eatables.table = function (_target, _data, _titles, sortable, callback) {
       makeClickable();
    };
 
+   /* Displays the table html representation
+    * in a location provided by the predefined
+    * target id */
    var print = function () {
       if(!target) {
-         console.log("specify target first");
+         console.log("specify a target id first");
          return;
       }
 
       $("#" + target).replaceWith(dom);
    };
 
+   /* Reset the output to the initial value. */
    var resetOutput = function () {
       output = data;
    };
