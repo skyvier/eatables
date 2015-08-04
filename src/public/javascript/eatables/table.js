@@ -30,11 +30,11 @@ eatables.table = function (_target, _data, _titles, sortable, callback) {
    callback = callback || console.log;
 
    if(_target === undefined) {
-      callback("table has no target");
+      callback("table target is undefined");
       return null;
    }
 
-   if($("#" + _target).length === 0) {
+   if(_target && $("#" + _target).length === 0 ) {
       callback("target element does not exist");
       return null;
    }
@@ -107,18 +107,20 @@ eatables.table = function (_target, _data, _titles, sortable, callback) {
    };
 
    var makeClickable = function () {
-      var selector;
-      for(selector in clickHandlers) {
-         $(selector, dom).click(function () {
+      var selector, 
+          getHandler = function () {
             var id = $(this).attr("id");
 
             if(id === 'row_title')
                return;
 
-            id = Number(id.charAt(id.length-1));;
+            id = Number(id.charAt(id.length-1));
             console.log(id);
             return clickHandlers[selector](output[id]);
-         });
+      };
+
+      for(selector in clickHandlers) {
+         $(selector, dom).click(getHandler);
       }
    };
 
@@ -139,13 +141,22 @@ eatables.table = function (_target, _data, _titles, sortable, callback) {
    };
 
    // you can also create a table without data
-   var constructDom = function () {
+   var buildTable = function () {
       var i;
+
+      if(!target) {
+         console.log("specify target first");
+         return;
+      }
+
       dom = $("<div id=" + target + ">");
 
-      if(!output || !data)
+      if(!output || !data) {
+         console.log("no output or data");
          return;
+      }
 
+      /* If titles are undefined, use object properties */
       titles = titles || Object.keys(data[0]);
 
       /* Creates the title row */
@@ -168,59 +179,69 @@ eatables.table = function (_target, _data, _titles, sortable, callback) {
       makeClickable();
    };
 
-   var construct = function () {
-      constructDom();
-      callback(null);
-   }();
-
    var print = function () {
+      if(!target) {
+         console.log("specify target first");
+         return;
+      }
+
       $("#" + target).replaceWith(dom);
    };
 
-   var setData = function (_data) {
-      _data = _data || null;
-      if(!$.isArray(_data))
-         _data = [_data];
-
-      data = _data;
+   var resetOutput = function () {
       output = data;
    };
 
    /* Priviledged functions */
 
-   /**
-    * Function prints the table to a dom element (div).
-    *
-    * @param _target {String} the id of the target element
+   /* 
+    * Data management 
    */
-   this.printTo = function (_target) {
-      target = _target;
-      print();
+
+   /**
+    * Function removes all data elements.
+   */
+   this.flushData = function () {
+      data = [];
+      resetOutput();
    };
 
    /**
-    * Function get data from the clicked row.
-    * The handler calls the callback function with the data
-    * of the clicked element.
+    * Function changes the data variables of the table to _data.
     *
-    * @param selector {String} the css selector of the object(s)
-    * @param callback {Function} a callback function
+    * @param _data {Object|Object[]} data object or data array
    */
-   this.onClick = function (selector, callback) {
-      console.log("adding a click handler for: " + selector);
-      clickHandlers[selector] = callback;
+   this.setData = function (_data) {
+      data = _data || null;
+      if(data && !$.isArray(data))
+         data = [data];
+
+      resetOutput();
    };
 
    /**
-    * Function changes the source data for the table. 
+    * Function appends a data element to the table data.
     *
-    * @param _data {Object[]} the data array 
+    * @param _data {Object} data object
+    * @return true if the append operation succeeds
    */
-   this.changeData = function (_data) { 
-      setData(_data);
-      constructDom();
-      print();
+   this.appendData = function (dataElement) {
+      if(typeof dataElement === 'undefined' || !dataElement) {
+         console.log("cannot append empty data");
+         return false;
+      }
+
+      if(!data)
+         data = [];
+
+      data.push(dataElement);
+      resetOutput();
+      return true;
    };
+
+   /*
+    * Table output management 
+   */
 
    /**
     * Function filters the output according to a regex. 
@@ -228,7 +249,7 @@ eatables.table = function (_target, _data, _titles, sortable, callback) {
     * @param prop {String} the property to filter 
     * @param regex {Object} a JS RegExp object
    */
-   this.filterData = function (prop, regex) {
+   this.filterTable = function (prop, regex) {
       try {
          output = data.filter(function (value) {
             return regex.test(value[prop]);
@@ -241,8 +262,82 @@ eatables.table = function (_target, _data, _titles, sortable, callback) {
       if(output.length === 0)
          output = [{ Error: "No result" }];
 
-      constructDom();
+      buildTable();
       print();
    };
+
+   /**
+    * Function displays the existing or new data (parameter)
+    * as a table in the target location.
+    *
+    * @param _data {Object[]|Object} data element or array or undefined
+   */
+   this.display = function (_data) {
+      if(typeof _data !== 'undefined') {
+         this.setData(_data);
+      }
+
+      buildTable();
+      print();
+   };
+
+   /**
+    * Function appends a dataElement to the data
+    * and displays the modified table.
+    *
+    * @param _data {Object} a data element
+    * @return true if append operation succeeds
+   */
+   this.append = function (dataElement) {
+      if(!this.appendData(dataElement))
+         return false;
+
+      buildTable();
+      print();
+      return true;
+   };
+   
+   /*
+    * Target management
+   */
+
+   /**
+    * Function set the target parameter for the table.
+    *
+    * @param _target {String} the id of the target element
+   */
+   this.setTarget = function (_target) {
+      target = _target;
+   };
+
+   /**
+    * Function changes the target parameter and print
+    * the table to the new location.
+    *
+    * @param _target {String} the id of the target element
+   */
+   this.printTo = function (_target) {
+      target = _target;
+      print();
+   };
+
+   /*
+    * Event handlers
+   */
+
+   /**
+    * Function allows the user to get data from the clicked row.
+    * The handler calls the callback function with the data
+    * of the clicked element.
+    *
+    * Doesn't apply to the title bar.
+    *
+    * @param selector {String} the css selector of the object(s)
+    * @param callback {Function} a callback function
+   */
+   this.onClick = function (selector, callback) {
+      clickHandlers[selector] = callback;
+   };
+
 };
 

@@ -142,6 +142,7 @@ dbHandler.prototype.queryObject = function (object, count) {
 
 /** 
  * Queries multiple database objects from more than one collections.
+ * Null objects are discarded.
  * 
  * @param objects {dbObject} database objects
  * @param count {Number} the amount of results wanted (0 = all)

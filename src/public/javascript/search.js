@@ -32,25 +32,25 @@ $(function () {
 
    /* Respond to search_result response from the server */
    dataHandler.onResponse('search_result', function (data) {
-      console.log("got a search_result");
-      if(data.results.length === 0)
+      if(data.results.length === 0) {
+         console.log("no search results");
          return;
+      }
 
-      console.log("putting the data");
+      ingreTable.flushData();
 
       data = data.results[0];
-
       if(data.collection === 'foods') {
-         var alaotsikko = data.type + " / " + data.effort;
+         var subtitle = data.type + " / " + data.effort;
          foodInfo.change("h2.otsikko", "text", data.name);
-         foodInfo.change("h3.alaotsikko", "text", alaotsikko);
+         foodInfo.change("h3.alaotsikko", "text", subtitle);
          foodInfo.change("td#time", "text", data.time || "-");
          foodInfo.change("td#portions", "text", data.portions || "-");
          foodInfo.change("td#recipe", "text", data.recipe || "-");
 
-         ingreTable.changeData(data.ingredients);
+         /* TODO: query ingredient details and append them to talbe */
       } else if(data.collection === 'ingredients') {
-         ingreTable.changeData(data); 
+         ingreTable.display(data); 
       }
    });
 
