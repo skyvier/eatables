@@ -26,12 +26,14 @@ $(function () {
 
    /* Respond to search_query response from the server */
    dataHandler.onResponse('search_query', function (data) {
-      console.log("got response");
       dataList.updateData(data.results, "name");  
    });
 
    /* Respond to search_result response from the server */
    dataHandler.onResponse('search_result', function (data) {
+      var i;
+      console.log("got search result");
+
       if(data.results.length === 0) {
          console.log("no search results");
          return;
@@ -49,6 +51,9 @@ $(function () {
          foodInfo.change("td#recipe", "text", data.recipe || "-");
 
          /* TODO: query ingredient details and append them to talbe */
+         if(!data.ingredients) 
+            return;
+
       } else if(data.collection === 'ingredients') {
          ingreTable.display(data); 
       }
@@ -74,7 +79,7 @@ $(function () {
             'search_result');
       }
 
-      dataHandler.queryGlobal(ingreObj, foodsObj, 1);
+      dataHandler.queryObjects(ingreObj, foodsObj, 1);
 
       return false;
    }

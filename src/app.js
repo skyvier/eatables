@@ -79,7 +79,7 @@ io.on('connection', function (socket) {
          res = { results: res };
          res.destination = data.destination; 
 
-         dev("\n### RESPONSE ###");
+         dev("\n### INTER COLLECTION RESPONSE ###");
          dev(res);
          socket.emit('query_response', res);
       });

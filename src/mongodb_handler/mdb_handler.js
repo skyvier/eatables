@@ -130,7 +130,7 @@ function accessCollection(collection, callback) {
    accessDatabase(function (err, db) {
       if(err) {
          errorMessage("mongoclient.connect", err);
-         return callback(err);
+         return callback(err, null, db);
       }
 
       db.collection(collection, function (err, col) {
@@ -247,19 +247,20 @@ function globalQueryOperation(objects, count, options, output) {
    });
 
    Async.parallel(tasks, function (err, docs) {
-      base = docs[0];
-
       if(err)
          return output(err);
 
       if(!docs || docs.length === 0)
          return output("no result");
 
+      base = docs[0];
+
       /* concat inner arrays to base */
       for(i = 1; i < docs.length; i++) {
-         base.concat(docs[i]);
+         base = base.concat(docs[i]);
       }
       docs = base;
+      console.log("DOCS contains " + JSON.stringify(docs) + "after queries...");
          
       if(typeof count === 'number')
          docs = docs.slice(0, count);
@@ -279,7 +280,7 @@ function globalQueryOperation(objects, count, options, output) {
             return output(err);
          }
 
-         output(null, docs);
+         return output(null, docs);
       });
    });
 }

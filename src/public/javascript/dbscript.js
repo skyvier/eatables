@@ -1,4 +1,5 @@
 /** Database functions for eatables 
+ * Requires typer.js
  * @author Joonas Laukka
 */
 
@@ -146,34 +147,39 @@ dbHandler.prototype.queryObject = function (object, count) {
  * @param count {Number} the amount of results wanted (0 = all)
  * @example queryObjects(obj1, obj2, obj3, 1);
 */
-dbHandler.prototype.queryGlobal = function () {
-   var i, arg, count, values = {},
-      options, dest, prop, object;
+dbHandler.prototype.queryObjects = function () {
+   /* Parse the arguments using typer.js */
+   var args = new eatables.typer(arguments);
 
-   /* Parse arguments */
-   for(i = 0; i < arguments.length; i++) {
-      arg = arguments[i]; 
-      if(typeof arg === 'object') {
-         if(!arg)
-            continue;
+   console.log(JSON.stringify(args.type('object')));
 
-         dest = arg.destination || "";
-         if(!values.hasOwnProperty(dest)) 
-            values[dest] = [];
-
-         values[dest].push(arg);
-      } else if(typeof arg === 'number') {
-         count = arg;
-      }
+   if(args.type('object').length === 0) {
+      console.log("no objects to query");
+      return;
    }
 
-   /* Add the count option */
-   count = count || 0;
-   options = { limit: count }; 
+   this.queryObjectArray(args.type('object'), args.type('number')[0]);
+};
+
+dbHandler.prototype.queryObjectArray = function (objs, count) {
+   var i, obj, queryArrays = {}, options, dest, prop;
+
+   /* Separate dbObject values by response destination */
+   for(i = 0; i < objs.length; i++) {
+      obj = objs[i];
+      dest = obj.destination || "";
+      if(!queryArrays.hasOwnProperty(dest)) 
+         queryArrays[dest] = [];
+
+      queryArrays[dest].push(obj);
+   }
+
+   /* Add the limit option */
+   options = { limit: count || 0 }; 
 
    /* Send an inter collection request for every destination */
-   for(prop in values) {
-      object = new dbObject('', values[prop], prop);
+   for(prop in queryArrays) {
+      object = new dbObject('', queryArrays[prop], prop);
       object.options = options;
       this.rawRequest(object, 'inter_collection'); 
    }
