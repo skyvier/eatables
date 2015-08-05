@@ -4,6 +4,9 @@ var eatables = eatables || {};
 /**
  * Parses an arguments list (args) to the javascript
  * data types.
+ * @class typer
+ *
+ * @constructor
  *
  * @param args parameter array
  * @return typeof args if args isn't array
