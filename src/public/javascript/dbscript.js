@@ -161,6 +161,14 @@ dbHandler.prototype.queryObjects = function () {
    this.queryObjectArray(args.type('object'), args.type('number')[0]);
 };
 
+/** 
+ * Queries multiple database objects from more than one collections.
+ * Null objects are discarded.
+ * 
+ * @param objs {dbObject[]} database objects
+ * @param count {Number} the amount of results wanted (0 = all)
+ * @example queryObjects([obj1, obj2], 1)
+*/
 dbHandler.prototype.queryObjectArray = function (objs, count) {
    var i, obj, queryArrays = {}, options, dest, prop;
 

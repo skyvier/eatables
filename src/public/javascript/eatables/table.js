@@ -56,6 +56,13 @@ eatables.table = function (_target, _data, _titles, sortable, callback) {
    var target = _target;    
 
    /** 
+    * The class of the table structure.
+    * This can be set with setTableClass().
+    * @type {String}
+   */
+   var tableClass = "";
+
+   /** 
     * The filtered data 
     * @type {Object[]} 
    */
@@ -176,7 +183,7 @@ eatables.table = function (_target, _data, _titles, sortable, callback) {
          row(output[i], i);
       }
 
-      $("tr", dom).wrapAll("<table></table>");
+      $("tr", dom).wrapAll("<table class=" + tableClass + "></table>");
 
       if(sortable)
          makeSortable();
@@ -305,6 +312,38 @@ eatables.table = function (_target, _data, _titles, sortable, callback) {
       print();
       return true;
    };
+
+   /**
+    * Function empties the table contents.
+   */
+   this.flushTable = function () {
+      this.flushData();
+      buildTable();
+      print();
+   };
+
+   /**
+    * Function hides the table.
+   */
+   this.hide = function () {
+      if(dom)
+         dom.hide();
+   };
+
+   /**
+    * Function shows the table.
+   */
+   this.show = function () {
+      if(dom)
+         dom.show();
+   };
+
+   /**
+    * Sets the class of the table.
+    *
+    * @param _class {String} the html class string
+   */
+   this.setTableClass = function (_class) { tableClass = _class; };
    
    /*
     * Target management
@@ -347,6 +386,4 @@ eatables.table = function (_target, _data, _titles, sortable, callback) {
    this.onClick = function (selector, callback) {
       clickHandlers[selector] = callback;
    };
-
 };
-

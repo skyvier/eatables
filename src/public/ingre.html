@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script>
+$(function () {
+   $("#linkbar").load("./link_bar.html");
+   $("#infobar").load("./info_bar.html");
+});
+
+</script>
 <meta charset="UTF-8">
 <LINK href="./style/testi.css" rel="stylesheet" type="text/css">
 <title>Eatables</title>
@@ -8,43 +16,46 @@
 
 <body>
 
-<div class="ots1">E</div>
+<div id="linkbar"></div>
 
-<div style="position:absolute; margin-left: 1000px; margin-top: 100px"><img src="./resources/pottu.png"></div>
-
-<div class="ots2" >AT<div style="color:#2DADBF; display: inline">ABLES</div></div>
-
-
-
-<table class="links">
-	<tr>
-		<td><a href="index.html">INDEX</a></td>
-		<td><a href="foods.html">FOODS</a></td>
-		<td><a href="ingre.html">INGREDIENTS</a></td>
-		<td><a href="search.html">SEARCH</a></td>
-	</tr>
-</table>
-
-<p class="copy">CopyrightMuchYes
-FoodsEvenMoreMuch YesYes.
-<br><br>
-Yay.
-<br>
-<img src="./resources/strawberry.png">
-</p>
+<div id="infobar"></div>
 
 <div class="boxi">
 
-<h1 class="otsikko">EatMuch.</h1>
+<h1 class="otsikko">Ingredients</h1>
 
 <p class="teksti">
-testi testi testi testi testi testi testi testi testi testi testi testi 
-testi testi testi testi testi testi testi testi testi testi testi testi 
-testi testi testi testi testi testi testi testi testi testi testi testi 
-testi testi testi testi testi testi testi testi testi testi testi testi 
-testi testi testi testi testi testi testi testi testi testi testi testi </p>
+Browse and add ingredients.</p>
 
+<div id="add">
+   <form style="float:left; margin-right: 10px">
+   <h3 class="alaotsikko">Add an ingredient</h3>
+   <p> Brand: </p> <input type="text" class="typical" id="brand"> <p> Name: </p> <input type="text" class="typical" id="name"> <p> Type: </p> <select id="type">
+      <option value="meat">Meat</option>
+      <option value="liquid">Liquid</option>
+      <option value="pasta">Pasta</option>
+      <option value="spices">Spices</option>
+      <option value="fruit">Fruit</option>
+      <option value="vegetable">Vegetable</option>
+   </select>
+   <br>
+   <p>Amount: </p> <input type="text" class="typical" style="width:50px" id="amount"> 
 
+   <p>Unit: </p> <select id="unit">
+      <option value="grams">grams</option>
+      <option value="liters">liters</option>
+   </select>
+
+   <p>Price: </p> <input type="text" class="typical" id="price">
+   </form>
+</div>
+
+<div style="float:left">
+   <h3 class="alaotsikko">Browse ingredients</h3>
+   <div id="ingredients">
+
+   </div>
+</div>
 
 
 
@@ -53,6 +64,10 @@ testi testi testi testi testi testi testi testi testi testi testi testi </p>
 
 
 
+<script src="/socket.io/socket.io.js"></script>
+<script src="/javascript/dbscript.js"></script>
+<script src="/javascript/eatables/table.js"></script>
+<script src="/javascript/ingre.js"></script>
 
 </body>
 </html>

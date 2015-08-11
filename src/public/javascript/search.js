@@ -1,4 +1,8 @@
 $(function () {
+   /* dbObjects */
+   var foodsObj = null, ingreObj = null;
+   var suggestionObjects = [];
+
    /* dbHandler defined by dbscript.js */
    var dataHandler = new dbHandler('192.168.1.42', 1337, console.log);
 
@@ -6,7 +10,10 @@ $(function () {
    var dataList = new eatables.appendableList($("#suggestions"), "option");
 
    /* A html structure where the values change */
-   var foodInfo = new eatables.structure($("div.foodbox"));
+   var foodInfo = new eatables.structure($("div#fooddata"));
+   foodInfo.hide();
+
+   $("div#ingredients").hide();
 
    /* Table titles */
    var ingreTitles = {
@@ -18,11 +25,13 @@ $(function () {
    };
 
    /* Ingredient table */
-   var ingreTable = new eatables.table("ingredients", null, 
+   var ingreTable = new eatables.table("ingredients_table", null, 
       ingreTitles, true, function (err) {
          if(err)
             console.log(err);
       });
+
+   ingreTable.setTableClass("data");
 
    /* Respond to search_query response from the server */
    dataHandler.onResponse('search_query', function (data) {
@@ -50,11 +59,20 @@ $(function () {
          foodInfo.change("td#portions", "text", data.portions || "-");
          foodInfo.change("td#recipe", "text", data.recipe || "-");
 
-         /* TODO: query ingredient details and append them to talbe */
-         if(!data.ingredients) 
+         foodInfo.show();
+
+         /* TODO: query ingredient details and append them to table */
+         if(!data.ingredients) {
+            $("div#ingredients").hide();
             return;
+         } else {
+            $("div#ingredients").show();
+            ingreTable.display(data.ingredients);
+         }
 
       } else if(data.collection === 'ingredients') {
+         foodInfo.hide();
+         $("div#ingredients").show();
          ingreTable.display(data); 
       }
    });
@@ -65,7 +83,7 @@ $(function () {
    /* Search form submit function, queries data */
    function submitForm() {
       var sVal = $("#search").val();
-      var foodsObj = null, ingreObj = null;
+      foodsObj = null; ingreObj = null;
 
       console.log("submitted!");
 
@@ -87,6 +105,7 @@ $(function () {
    /* Runs whenever the input field changes (updates options) */
    $("#search").on('input', function () {
       var sVal = $(this).val();
+      suggestionObjects = [];
 
       // don't do the query with empty input value
       if(sVal === "")
@@ -99,12 +118,15 @@ $(function () {
          submitForm();
       }
 
-      // so far searches only for foods
-      var foodsObj = new dbObject('foods', { name: new dbRegex('^' + sVal, 'i') }, 
-                             'search_query');
-      if($("#food").is(':checked')) {
-         dataHandler.queryObject(foodsObj, 5);
-      }
+      // search five suggestions from all checked collections
+      $("form#search_form input[type=checkbox]").each(function () {
+         if($(this).is(':checked')) {
+            suggestionObjects.push(new dbObject($(this).val(), { name: new dbRegex('^' + sVal, 'i') }, 
+                                   'search_query'));
+         } 
+      });
+
+      dataHandler.queryObjectArray(suggestionObjects, 5);
    }); 
 
    $("#search_form").on('submit', submitForm);

@@ -35,39 +35,47 @@ Name <input type="text" class="typical" id="search" list="suggestions">
 
 </datalist>
 <br>
-<input type="checkbox" id="food" value="Food" class="search" checked>Food<br>
-<input type="checkbox" id="ingredient" value="Ingredient" class="search" checked>Ingredient<br>
+<input type="checkbox" id="food" value="foods" class="search" checked>Food<br>
+<input type="checkbox" id="ingredient" value="ingredients" class="search" checked>Ingredient<br>
 </form>
 
 </div>
 
 <div class="foodbox">
-   <h2 class="otsikko">Output</h2>
-   <h3 class="alaotsikko" id="type">Type / Effort</h3> 
+   <div id="fooddata">
+      <h2 class="otsikko">Output</h2>
+      <h3 class="alaotsikko" id="type">Type / Effort</h3> 
+   </div>
 
-   <div class="table_div">
-      <table>
-      <tr>
-      <td class="info">Time</td>
-      <td id="time"></td>
-      </tr>
-      <tr>
-      <td class="info">Portions</td>
-      <td id="portions"></td>
-      </tr>
-      <tr>
-      <td class="info">Recipe</td>
-      <td id="recipe"></td>
-      </tr>
-      </table>
+   <div id="ingredients">
+      <h3 class="alaotsikko">Ingredients</h3>
+      <div class="table_div">
+      <div id="ingredients_table">
+
+      </div>
+      </div>
+   </div>
+
+   <div id="fooddata">
+      <div class="table_div">
+         <table class="data">
+         <tr>
+         <td class="info">Time</td>
+         <td id="time"></td>
+         </tr>
+         <tr>
+         <td class="info">Portions</td>
+         <td id="portions"></td>
+         </tr>
+         <tr>
+         <td class="info">Recipe</td>
+         <td id="recipe"></td>
+         </tr>
+         </table>
+      </div>
    </div>
 </div>
 
-<div class="table_div">
-<div id="ingredients">
-
-</div>
-</div>
 
 <script src="/socket.io/socket.io.js"></script>
 <script src="/javascript/eatables/typer.js"></script>

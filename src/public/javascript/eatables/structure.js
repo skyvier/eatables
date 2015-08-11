@@ -23,14 +23,14 @@
       var construct = function () {
          if(typeof _dom !== 'object')
             dom = $(_dom) || null;
-      else
-         dom = _dom; 
+         else
+            dom = _dom; 
 
-      if(!dom) {
-         console.log("structure: no such html object");
-         return null;
-      }
-   }();
+         if(!dom || typeof dom === 'undefined') {
+            console.log("structure: no such html object");
+            return null;
+         }
+      }();
 
    /**
     * Function changes a text, attribute or value
@@ -76,6 +76,12 @@
          console.log("GOT IT");   
       });
    };
+
+   /**
+    * jQuery hide/show function callers.
+   */
+   this.hide = function () { dom.hide(); };
+   this.show = function () { dom.show(); };
 
    /**
     * Function returns the jquery object and/or changes it.

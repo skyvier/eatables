@@ -114,21 +114,20 @@ p.copy {
 
 div.table_div {
 	width:400px;
-	height:400px;
+	max-height:400px;
 	overflow:auto;
 	border-top:1px solid #2DADBF;
 	//border-bottom:1px solid #2DADBF;
 	float:left;
 }
 
-div.table_div table {
-	
+table.data {
 	font-family: Arial;
 	font-size: 14px;
 	line-height: 200%;
 }
 
-div.table_div th {
+table.data th {
 	font-family: Arial;
 	font-weight: 90;
 	font-size: 16px;
@@ -136,7 +135,7 @@ div.table_div th {
 	color: white;
 }
 
-div.table_div td#row_title {
+table.data td#row_title {
 	font-family: Arial;
 	font-weight: 90;
 	font-size: 16px;
@@ -144,15 +143,15 @@ div.table_div td#row_title {
 	color: white;
 }
 
-div.table_div tr:nth-child(odd) {
+table.data tr:nth-child(odd) {
 	background-color: #DDF9FD;
 }
 
-div.table_div tr:nth-child(even) {
+table.data tr:nth-child(even) {
 	background-color: white;
 }
 
-div.table_div td {
+table.data td {
 	color: #474747;
 }
 
@@ -280,4 +279,3 @@ div.table_div td.info {
 	font-size: 14px;
 	font-weight: 900;
 }
-

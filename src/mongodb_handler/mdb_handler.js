@@ -37,6 +37,7 @@ var dbObjectSchema = {
 
 var mongoUrl; // url of the database
 var srvParam; // server parameters object
+var dataBase;
 var v = new Validator(); // JSON schema validator
 
 function checkValidity(param, schema) {
@@ -123,6 +124,9 @@ function detectRegex(object) {
 }
 
 function accessDatabase(callback) {
+   if(dataBase)
+      return callback(null, dataBase);
+
    MongoClient.connect(mongoUrl, callback);
 }
 
@@ -149,7 +153,8 @@ function getCollectionName(id, output) {
 
    accessDatabase(function (err, db) {
       if(err) {
-         db.close();
+         if(db)
+            db.close();
          errorMessage("mongoclient.connect", err);
          return output(err);
       }
@@ -169,8 +174,6 @@ function getCollectionName(id, output) {
                }
 
                result = doc.length > 0;
-              
-               console.log("Checking " + col.collectionName + " ... " + result); 
                callback(result);
             });
          }, function (result) {
@@ -191,8 +194,10 @@ function dbOperation(operation, options, object, callback) {
 
    accessCollection(object.collection, function (err, col, db) {
       if(err) {
+         if(db)
+            db.close();
+
          errorMessage("database collection", err);
-         db.close();
          return callback(err);
       }
 
@@ -260,7 +265,6 @@ function globalQueryOperation(objects, count, options, output) {
          base = base.concat(docs[i]);
       }
       docs = base;
-      console.log("DOCS contains " + JSON.stringify(docs) + "after queries...");
          
       if(typeof count === 'number')
          docs = docs.slice(0, count);
@@ -319,6 +323,15 @@ exports.init = function () {
 
    if(!testServer())
       return false;
+
+   accessDatabase(function (err, db) {
+      if(!err) {
+         dataBase = db;
+         console.log("database connection has been established");
+      } else {
+         return false;
+      }
+   });
 
    console.log("the mongodb server " + mongoUrl + " is operational");
    return true;

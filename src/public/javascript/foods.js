@@ -65,6 +65,8 @@ $(function () {
       updateInfo(data);
    });
 
+   resultTable.setTableClass("data");
+
    /* dbHandler functionalities */
 
    dataHandler.listen();
