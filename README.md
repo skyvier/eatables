@@ -24,40 +24,9 @@ standard port (27017).
 Some settings (such as food and ingredient types) can
 be customized from the public eatables configuration file,
 src/public/configs.json. It should be edited according to
-the following schema:
+the schema in doc/configs/eatables.json.
 
-```
-{
-  "type": "object"
-  "properties": {
-    "ingredients": { 
-      "type": "object",
-      "properties": {
-        "types": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        },
-        "measure_units": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        }
-      },
-    },
-    "foods": {
-      "type": "object",
-      "properties": {
-        "types": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        }
-      }
-    }
-  }
-}
-```
+If the file isn't customized, hardwritten default values
+will be used. Customizing this file won't alter the
+existing database values.
+

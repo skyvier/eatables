@@ -1,0 +1,33 @@
+{
+  "type": "object",
+  "properties": {
+    "ingredients": { 
+      "type": "object",
+      "properties": {
+        "types": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "measure_units": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+    },
+    "foods": {
+      "type": "object",
+      "properties": {
+        "types": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
