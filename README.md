@@ -1,9 +1,9 @@
 # eatables
 A Node.js web application for everyday meal planning.
 
-### configuration
+### database configuration
 The application uses a MongoDB database. Database settings
-should be edited to config.json according to the following
+should be edited to src/config.json according to the following
 schema:
 
 ```
@@ -19,3 +19,45 @@ schema:
 ```
 If `server_port` isn't specified, eatables will use the
 standard port (27017).
+
+### eatables configuration
+Some settings (such as food and ingredient types) can
+be customized from the public eatables configuration file,
+src/public/configs.json. It should be edited according to
+the following schema:
+
+```
+{
+  "type": "object"
+  "properties": {
+    "ingredients": { 
+      "type": "object",
+      "properties": {
+        "types": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "measure_units": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+    },
+    "foods": {
+      "type": "object",
+      "properties": {
+        "types": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
+```
