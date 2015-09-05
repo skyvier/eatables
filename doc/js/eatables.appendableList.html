@@ -233,7 +233,196 @@ Requires eatables.structure
 
         
             
-<h4 class="name" id="structure"><span class="type-signature"></span>structure<span class="type-signature"> :Object</span></h4>
+<h4 class="name" id="updateTexts"><span class="type-signature"></span>updateTexts<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    Function updates the new values to the list.
+Function updateValue with appendText as an appendMethod.
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="public_javascript_eatables_list.js.html">public/javascript/eatables/list.js</a>, <a href="public_javascript_eatables_list.js.html#line113">line 113</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="updateTextsAndValues"><span class="type-signature"></span>updateTextsAndValues<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    Function updates the new values to the list.
+Function updateValue with appendTextAndValue as an appendMethod.
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="public_javascript_eatables_list.js.html">public/javascript/eatables/list.js</a>, <a href="public_javascript_eatables_list.js.html#line119">line 119</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="updateValues"><span class="type-signature"></span>updateValues<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    Function updates the new values to the list.
+Function updateValue with appendValue as an appendMethod.
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="public_javascript_eatables_list.js.html">public/javascript/eatables/list.js</a>, <a href="public_javascript_eatables_list.js.html#line107">line 107</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="~structure"><span class="type-signature">(inner) </span>structure<span class="type-signature"> :Object</span></h4>
 
 
 
@@ -314,14 +503,15 @@ Requires eatables.structure
 
     
 
-    <h4 class="name" id="appendValue"><span class="type-signature"></span>appendValue<span class="signature">(value)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="updateData"><span class="type-signature"></span>updateData<span class="signature">(appendMethod, dataObjects, keys, separator)</span><span class="type-signature"></span></h4>
 
     
 
 
 
 <div class="description">
-    Function appends a list element to the list.
+    Function updates the new values to the list with a
+custom appendMethod.
 </div>
 
 
@@ -357,16 +547,13 @@ Requires eatables.structure
 
         <tr>
             
-                <td class="name"><code>value</code></td>
+                <td class="name"><code>appendMethod</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">String</span>
-|
-
-<span class="param-type">Number</span>
+<span class="param-type">function</span>
 
 
             
@@ -376,117 +563,9 @@ Requires eatables.structure
 
             
 
-            <td class="description last">value to be inserted</td>
+            <td class="description last">function of type 'append(value)'</td>
         </tr>
 
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="public_javascript_eatables_list.js.html">public/javascript/eatables/list.js</a>, <a href="public_javascript_eatables_list.js.html#line33">line 33</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
-    
-
-    <h4 class="name" id="updateData"><span class="type-signature"></span>updateData<span class="signature">(dataObjects, keys, separator)</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-<div class="description">
-    Function updates the new values to the list.
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
     
 
         <tr>
@@ -594,7 +673,412 @@ Requires eatables.structure
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="public_javascript_eatables_list.js.html">public/javascript/eatables/list.js</a>, <a href="public_javascript_eatables_list.js.html#line49">line 49</a>
+        <a href="public_javascript_eatables_list.js.html">public/javascript/eatables/list.js</a>, <a href="public_javascript_eatables_list.js.html#line71">line 71</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="~appendText"><span class="type-signature">(inner) </span>appendText<span class="signature">(value)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Function appends a list element with a text only
+to the list.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+|
+
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">value to be inserted</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="public_javascript_eatables_list.js.html">public/javascript/eatables/list.js</a>, <a href="public_javascript_eatables_list.js.html#line47">line 47</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="~appendTextAndValue"><span class="type-signature">(inner) </span>appendTextAndValue<span class="signature">(value)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Function appends a list element with a value and
+a text to the list.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+|
+
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">value to be inserted</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="public_javascript_eatables_list.js.html">public/javascript/eatables/list.js</a>, <a href="public_javascript_eatables_list.js.html#line57">line 57</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="~appendValue"><span class="type-signature">(inner) </span>appendValue<span class="signature">(value)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Function appends a list element with a value only
+to the list.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+|
+
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">value to be inserted</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="public_javascript_eatables_list.js.html">public/javascript/eatables/list.js</a>, <a href="public_javascript_eatables_list.js.html#line37">line 37</a>
     </li></ul></dd>
     
 
@@ -642,7 +1126,7 @@ Requires eatables.structure
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.2</a> on Tue Aug 11 2015 03:05:40 GMT+0300 (EEST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.2</a> on Sun Sep 06 2015 01:34:29 GMT+0300 (EEST)
 </footer>
 
 <script> prettyPrint(); </script>

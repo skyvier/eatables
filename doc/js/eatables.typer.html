@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: dbObject</title>
+    <title>JSDoc: Class: typer</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: dbObject</h1>
+    <h1 class="page-title">Class: typer</h1>
 
     
 
@@ -29,10 +29,12 @@
 <header>
     
         <h2>
-        dbObject
+            <span class="ancestors"><a href="eatables.html">eatables</a>.</span>
+        
+        typer
         </h2>
         
-            <div class="class-description">dbObject</div>
+            <div class="class-description">typer</div>
         
     
 </header>
@@ -46,15 +48,15 @@
     <h2>Constructor</h2>
     
 
-    <h4 class="name" id="dbObject"><span class="type-signature"></span>new dbObject<span class="signature">(col, val, dest)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="typer"><span class="type-signature"></span>new typer<span class="signature">(args)</span><span class="type-signature"></span></h4>
 
     
 
 
 
 <div class="description">
-    A constructor for a database object based on
-dbObjectSchema in the mongodb_handler package.
+    Parses an arguments list (args) to the javascript
+data types.
 </div>
 
 
@@ -90,15 +92,10 @@ dbObjectSchema in the mongodb_handler package.
 
         <tr>
             
-                <td class="name"><code>col</code></td>
+                <td class="name"><code>args</code></td>
             
 
             <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
             
             </td>
 
@@ -106,53 +103,7 @@ dbObjectSchema in the mongodb_handler package.
 
             
 
-            <td class="description last">target collection in the DB</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>val</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">a value object</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>dest</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">the response destination</td>
+            <td class="description last">parameter array</td>
         </tr>
 
     
@@ -193,7 +144,7 @@ dbObjectSchema in the mongodb_handler package.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="public_javascript_dbscript.js.html">public/javascript/dbscript.js</a>, <a href="public_javascript_dbscript.js.html#line19">line 19</a>
+        <a href="public_javascript_eatables_typer.js.html">public/javascript/eatables/typer.js</a>, <a href="public_javascript_eatables_typer.js.html#line14">line 14</a>
     </li></ul></dd>
     
 
@@ -216,6 +167,16 @@ dbObjectSchema in the mongodb_handler package.
 
 
 
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    typeof args if args isn't array
+</div>
+
+
+
+    
 
 
 
@@ -234,6 +195,151 @@ dbObjectSchema in the mongodb_handler package.
 
     
 
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    <h4 class="name" id="type"><span class="type-signature"></span>type<span class="signature">(_type)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Return an array of _type arguments
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>_type</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">a javascript type identifier string</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="public_javascript_eatables_typer.js.html">public/javascript/eatables/typer.js</a>, <a href="public_javascript_eatables_typer.js.html#line51">line 51</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    array of arguments of type _type
+</div>
+
+
+
+    
+
+
+
+        
     
 
     
