@@ -1,4 +1,21 @@
 $(function () {
+   $.getJSON("../configs.json").done(function (configs) {
+      if(typeof configs === 'undefined') {
+         console.log("configs is undefined");
+         return;
+      }
+
+      // Read the configuration file and set the proper ingredient
+      // type options.
+      var typeList = new eatables.appendableList($("div#type_options"), "button");
+      typeList.updateTextsAndValues(configs.foods.types);
+   }).fail(function () {
+      // Reading the configurations has failed
+      
+      console.log("couldn't load configurations");
+      window.open("../error.html");
+   }).always(function () {
+
    /* Variables */
 
    var dataHandler = new dbHandler('192.168.1.42', 1337, function () {
@@ -82,21 +99,28 @@ $(function () {
       dataHandler.queryObject(obj, 0);
    }
 
-   $("#main").click(function () {
-      typeSearch("Main");
-   });
+   //$("#main").click(function () {
+      //typeSearch("Main");
+   //});
 
-   $("#dessert").click(function () {
-      typeSearch("Dessert");
-   });
+   //$("#dessert").click(function () {
+      //typeSearch("Dessert");
+   //});
 
    $("#add").click(function () {
       window.location.replace("/new_food.html");
+   });
+
+   $("div#type_options button").each(function () {
+      $(this).click(function () {
+         typeSearch($(this).val());
+      });
    });
 
    $("#search_foods").keyup(function () {
       resultTable.filterTable("name", new RegExp("^" + $(this).val(), "i"));
    });
 
+   });
 });
 

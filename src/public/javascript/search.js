@@ -35,7 +35,7 @@ $(function () {
 
    /* Respond to search_query response from the server */
    dataHandler.onResponse('search_query', function (data) {
-      dataList.updateData(data.results, "name");  
+      dataList.updateValues(data.results, "name");  
    });
 
    /* Respond to search_result response from the server */

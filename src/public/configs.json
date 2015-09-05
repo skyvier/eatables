@@ -1,0 +1,27 @@
+{
+   "ingredients": {
+      "types": [
+         "Meat",
+         "Liquid",
+         "Pasta",
+         "Rice",
+         "Spices",
+         "Fruit",
+         "Vegetable",
+         "Other"
+      ],
+      "measure_units": [
+         "g",
+         "l",
+         "dl",
+         "kg"
+      ]
+   },
+   "foods": {
+      "types": [
+         "Main",
+         "Dessert",
+         "Appetiser"
+      ]
+   }
+}

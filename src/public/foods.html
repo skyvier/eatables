@@ -20,10 +20,16 @@ $(function () {
 
 <div class="boxi">
 
-<h1 class="otsikko">EatMuch.</h1>
+<h1 class="otsikko">Foods</h1>
+
+<p class="teksti">
+Browse and add foods.</p>
 
 <div style="padding-bottom: 10px">
-<button id="main">Main</button> <button id="dessert">Dessert</button> <button id="add">+</button>
+   <div id="type_options" style="float:left">
+      <button value="Main">Main</button> <button value="Dessert">Dessert</button> 
+   </div>
+   <button id="add" style="float:right">+</button>
 </div>
 <br>
 
@@ -64,6 +70,7 @@ $(function () {
 <script src="/javascript/dbscript.js"></script>
 <script src="/javascript/eatables/table.js"></script>
 <script src="/javascript/eatables/structure.js"></script>
+<script src="/javascript/eatables/list.js"></script>
 <script src="/javascript/foods.js"></script>
 
 </body>

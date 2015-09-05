@@ -27,46 +27,88 @@ $(function () {
 <p class="teksti">
 Browse and add ingredients.</p>
 
-<div id="add">
-   <form style="float:left; margin-right: 10px">
+<div id="add" style="float:left;width:30%">
+   <form style="float:left; margin-right: 10px" id="add_ingre">
    <h3 class="alaotsikko">Add an ingredient</h3>
-   <p> Brand: </p> <input type="text" class="typical" id="brand"> <p> Name: </p> <input type="text" class="typical" id="name"> <p> Type: </p> <select id="type">
-      <option value="meat">Meat</option>
-      <option value="liquid">Liquid</option>
-      <option value="pasta">Pasta</option>
-      <option value="spices">Spices</option>
-      <option value="fruit">Fruit</option>
-      <option value="vegetable">Vegetable</option>
-   </select>
-   <br>
-   <p>Amount: </p> <input type="text" class="typical" style="width:50px" id="amount"> 
-
-   <p>Unit: </p> <select id="unit">
-      <option value="grams">grams</option>
-      <option value="liters">liters</option>
-   </select>
-
-   <p>Price: </p> <input type="text" class="typical" id="price">
+   <table>
+      <tr>
+         <td>
+            <p> Brand: </p> 
+         </td>
+         <td>
+            <input type="text" class="typical" id="manufacturer"> 
+         </td>
+      </tr>
+      <tr>
+         <td>
+            <p> Name: </p> 
+         </td>
+         <td>
+            <input type="text" class="typical" id="name"> 
+         </td>
+      </tr>
+      <tr>
+         <td>
+            <p> Type: </p> 
+         </td>
+         <td>
+            <select id="type">
+               <option value="meat">Meat</option>
+               <option value="liquid">Liquid</option>
+               <option value="pasta">Pasta</option>
+               <option value="spices">Spices</option>
+               <option value="fruit">Fruit</option>
+               <option value="vegetable">Vegetable</option>
+            </select>
+         </td>
+      </tr>
+      <tr>
+         <td>
+            <p>Amount: </p> 
+         </td>
+         <td>
+            <input type="text" style="float:left;width:40%" class="typical" id="measure"> 
+            <select id="measure_unit" style="width:30%">
+               <option value="grams">grams</option>
+               <option value="liters">liters</option>
+            </select>
+         </td>
+      </tr>
+      <tr>
+         <td>
+            <p>Price: </p> 
+         </td>
+         <td>
+            <input type="text" class="typical" id="price">
+         </td>
+      </tr>
+      <tr>
+         <td>
+            <p>Sources: </p>
+         </td>
+         <td>
+            <input type="text" class="typical" placeholder="K-Citymarket, K-Market" id="sources">
+         </td>
+      </tr>
+   </table>
+   <button type="submit">Submit</button>
    </form>
 </div>
 
-<div style="float:left">
+<div style="float:right;width:60%">
    <h3 class="alaotsikko">Browse ingredients</h3>
    <div id="ingredients">
 
    </div>
 </div>
 
-
-
 </div>
-
-
-
 
 <script src="/socket.io/socket.io.js"></script>
 <script src="/javascript/dbscript.js"></script>
 <script src="/javascript/eatables/table.js"></script>
+<script src="/javascript/eatables/structure.js"></script>
+<script src="/javascript/eatables/list.js"></script>
 <script src="/javascript/ingre.js"></script>
 
 </body>

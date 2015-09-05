@@ -116,7 +116,6 @@ function detectRegex(object) {
       obj = object[objs[i]];
       for(prop in obj) {
          if(prop === '$regex') {
-            console.log("Found a regular expression in " + objs[i] + ":" + obj[prop][0]);
             object[objs[i]] = new RegExp(obj[prop][0], obj[prop][1]);
          }   
       } 
