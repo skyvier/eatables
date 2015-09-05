@@ -8,7 +8,7 @@ schema:
 
 ```
 {
-  "type": "object"
+  "type": "object",
   "properties": {
     "server_url": { "type": "string" },
     "server_port": { "type": "string" },
